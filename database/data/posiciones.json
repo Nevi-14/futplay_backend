@@ -1,0 +1,22 @@
+[
+    {
+        "Cod_Posicion": 1,
+        "Posicion": "Sin Definir"
+    },
+    {
+        "Cod_Posicion": 2,
+        "Posicion": "Portero"
+    },
+    {
+        "Cod_Posicion": 3,
+        "Posicion": "Defensa"
+    },
+    {
+        "Cod_Posicion": 4,
+        "Posicion": "Mediocampista"
+    },
+    {
+        "Cod_Posicion": 5,
+        "Posicion": "Delantero"
+    }
+]

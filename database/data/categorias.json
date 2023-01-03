@@ -1,0 +1,18 @@
+[
+    {
+        "Cod_Categoria": 1,
+        "Nombre": "Fútbol 11"
+    },
+    {
+        "Cod_Categoria": 2,
+        "Nombre": "Fútbol 9"
+    },
+    {
+        "Cod_Categoria": 3,
+        "Nombre": "Fútbol 7"
+    },
+    {
+        "Cod_Categoria": 4,
+        "Nombre": "Fútbol 5"
+    }
+]

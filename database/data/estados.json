@@ -1,0 +1,34 @@
+[
+    {
+        "Cod_Estado": 1,
+        "Estado": "Sin Definir"
+    },
+    {
+        "Cod_Estado": 2,
+        "Estado": "Enviado"
+    },
+    {
+        "Cod_Estado": 3,
+        "Estado": "Recibido"
+    },
+    {
+        "Cod_Estado": 4,
+        "Estado": "Confirmado"
+    },
+    {
+        "Cod_Estado": 5,
+        "Estado": "En proceso"
+    },
+    {
+        "Cod_Estado": 6,
+        "Estado": "Finalizado"
+    },
+    {
+        "Cod_Estado": 7,
+        "Estado": "Cancelado"
+    },
+    {
+        "Cod_Estado": 8,
+        "Estado": "Revisión"
+    }
+]

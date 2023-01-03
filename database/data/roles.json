@@ -1,0 +1,14 @@
+[
+    {
+        "Cod_Role": 1,
+        "Nombre": "Administrador"
+    },
+    {
+        "Cod_Role": 2,
+        "Nombre": "Administrador Cancha - Cliente"
+    },
+    {
+        "Cod_Role": 3,
+        "Nombre": "Cliente"
+    }
+]

@@ -1,0 +1,407 @@
+[
+    {
+        "Cod_Canton": 101,
+        "Cod_Provincia": 1,
+        "Canton": "San José"
+    },
+    {
+        "Cod_Canton": 102,
+        "Cod_Provincia": 1,
+        "Canton": "Escazú"
+    },
+    {
+        "Cod_Canton": 103,
+        "Cod_Provincia": 1,
+        "Canton": "Desamparados"
+    },
+    {
+        "Cod_Canton": 104,
+        "Cod_Provincia": 1,
+        "Canton": "Puriscal"
+    },
+    {
+        "Cod_Canton": 105,
+        "Cod_Provincia": 1,
+        "Canton": "Tarrazú"
+    },
+    {
+        "Cod_Canton": 106,
+        "Cod_Provincia": 1,
+        "Canton": "Aserrí"
+    },
+    {
+        "Cod_Canton": 107,
+        "Cod_Provincia": 1,
+        "Canton": "Mora"
+    },
+    {
+        "Cod_Canton": 108,
+        "Cod_Provincia": 1,
+        "Canton": "Goicoechea"
+    },
+    {
+        "Cod_Canton": 109,
+        "Cod_Provincia": 1,
+        "Canton": "Santa Ana"
+    },
+    {
+        "Cod_Canton": 110,
+        "Cod_Provincia": 1,
+        "Canton": "Alajuelita"
+    },
+    {
+        "Cod_Canton": 111,
+        "Cod_Provincia": 1,
+        "Canton": "Vasquez de Coronado"
+    },
+    {
+        "Cod_Canton": 112,
+        "Cod_Provincia": 1,
+        "Canton": "Acosta"
+    },
+    {
+        "Cod_Canton": 113,
+        "Cod_Provincia": 1,
+        "Canton": "Tibás"
+    },
+    {
+        "Cod_Canton": 114,
+        "Cod_Provincia": 1,
+        "Canton": "Moravia"
+    },
+    {
+        "Cod_Canton": 115,
+        "Cod_Provincia": 1,
+        "Canton": "Montes de Oca"
+    },
+    {
+        "Cod_Canton": 116,
+        "Cod_Provincia": 1,
+        "Canton": "Turrubares"
+    },
+    {
+        "Cod_Canton": 117,
+        "Cod_Provincia": 1,
+        "Canton": "Dota"
+    },
+    {
+        "Cod_Canton": 118,
+        "Cod_Provincia": 1,
+        "Canton": "Curridabat"
+    },
+    {
+        "Cod_Canton": 119,
+        "Cod_Provincia": 1,
+        "Canton": "Pérez Zeledón"
+    },
+    {
+        "Cod_Canton": 120,
+        "Cod_Provincia": 1,
+        "Canton": "León Cortés"
+    },
+    {
+        "Cod_Canton": 201,
+        "Cod_Provincia": 2,
+        "Canton": "Alajuela"
+    },
+    {
+        "Cod_Canton": 202,
+        "Cod_Provincia": 2,
+        "Canton": "San Ramón"
+    },
+    {
+        "Cod_Canton": 203,
+        "Cod_Provincia": 2,
+        "Canton": "Grecia"
+    },
+    {
+        "Cod_Canton": 204,
+        "Cod_Provincia": 2,
+        "Canton": "San Mateo"
+    },
+    {
+        "Cod_Canton": 205,
+        "Cod_Provincia": 2,
+        "Canton": "Atenas"
+    },
+    {
+        "Cod_Canton": 206,
+        "Cod_Provincia": 2,
+        "Canton": "Naranjo"
+    },
+    {
+        "Cod_Canton": 207,
+        "Cod_Provincia": 2,
+        "Canton": "Palmares"
+    },
+    {
+        "Cod_Canton": 208,
+        "Cod_Provincia": 2,
+        "Canton": "Poás"
+    },
+    {
+        "Cod_Canton": 209,
+        "Cod_Provincia": 2,
+        "Canton": "Orotina"
+    },
+    {
+        "Cod_Canton": 210,
+        "Cod_Provincia": 2,
+        "Canton": "San Carlos"
+    },
+    {
+        "Cod_Canton": 211,
+        "Cod_Provincia": 2,
+        "Canton": "Alfaro Ruiz"
+    },
+    {
+        "Cod_Canton": 212,
+        "Cod_Provincia": 2,
+        "Canton": "Valverde Vega"
+    },
+    {
+        "Cod_Canton": 213,
+        "Cod_Provincia": 2,
+        "Canton": "Upala"
+    },
+    {
+        "Cod_Canton": 214,
+        "Cod_Provincia": 2,
+        "Canton": "Los Chiles"
+    },
+    {
+        "Cod_Canton": 215,
+        "Cod_Provincia": 2,
+        "Canton": "Guatuso"
+    },
+    {
+        "Cod_Canton": 301,
+        "Cod_Provincia": 3,
+        "Canton": "Cartago"
+    },
+    {
+        "Cod_Canton": 302,
+        "Cod_Provincia": 3,
+        "Canton": "Paraíso"
+    },
+    {
+        "Cod_Canton": 303,
+        "Cod_Provincia": 3,
+        "Canton": "La Unión"
+    },
+    {
+        "Cod_Canton": 304,
+        "Cod_Provincia": 3,
+        "Canton": "Jiménez"
+    },
+    {
+        "Cod_Canton": 305,
+        "Cod_Provincia": 3,
+        "Canton": "Turrialba"
+    },
+    {
+        "Cod_Canton": 306,
+        "Cod_Provincia": 3,
+        "Canton": "Alvarado"
+    },
+    {
+        "Cod_Canton": 307,
+        "Cod_Provincia": 3,
+        "Canton": "Oreamuno"
+    },
+    {
+        "Cod_Canton": 308,
+        "Cod_Provincia": 3,
+        "Canton": "El Guarco"
+    },
+    {
+        "Cod_Canton": 401,
+        "Cod_Provincia": 4,
+        "Canton": "Heredia"
+    },
+    {
+        "Cod_Canton": 402,
+        "Cod_Provincia": 4,
+        "Canton": "Barva"
+    },
+    {
+        "Cod_Canton": 403,
+        "Cod_Provincia": 4,
+        "Canton": "Santo Domingo"
+    },
+    {
+        "Cod_Canton": 404,
+        "Cod_Provincia": 4,
+        "Canton": "Santa Bárbara"
+    },
+    {
+        "Cod_Canton": 405,
+        "Cod_Provincia": 4,
+        "Canton": "San Rafael"
+    },
+    {
+        "Cod_Canton": 406,
+        "Cod_Provincia": 4,
+        "Canton": "San Isidro"
+    },
+    {
+        "Cod_Canton": 407,
+        "Cod_Provincia": 4,
+        "Canton": "Belén"
+    },
+    {
+        "Cod_Canton": 408,
+        "Cod_Provincia": 4,
+        "Canton": "Flores"
+    },
+    {
+        "Cod_Canton": 409,
+        "Cod_Provincia": 4,
+        "Canton": "San Pablo"
+    },
+    {
+        "Cod_Canton": 410,
+        "Cod_Provincia": 4,
+        "Canton": "Sarapiquí "
+    },
+    {
+        "Cod_Canton": 501,
+        "Cod_Provincia": 5,
+        "Canton": "Liberia"
+    },
+    {
+        "Cod_Canton": 502,
+        "Cod_Provincia": 5,
+        "Canton": "Nicoya"
+    },
+    {
+        "Cod_Canton": 503,
+        "Cod_Provincia": 5,
+        "Canton": "Santa Cruz"
+    },
+    {
+        "Cod_Canton": 504,
+        "Cod_Provincia": 5,
+        "Canton": "Bagaces"
+    },
+    {
+        "Cod_Canton": 505,
+        "Cod_Provincia": 5,
+        "Canton": "Carrillo"
+    },
+    {
+        "Cod_Canton": 506,
+        "Cod_Provincia": 5,
+        "Canton": "Cañas"
+    },
+    {
+        "Cod_Canton": 507,
+        "Cod_Provincia": 5,
+        "Canton": "Abangares"
+    },
+    {
+        "Cod_Canton": 508,
+        "Cod_Provincia": 5,
+        "Canton": "Tilarán"
+    },
+    {
+        "Cod_Canton": 509,
+        "Cod_Provincia": 5,
+        "Canton": "Nandayure"
+    },
+    {
+        "Cod_Canton": 510,
+        "Cod_Provincia": 5,
+        "Canton": "La Cruz"
+    },
+    {
+        "Cod_Canton": 511,
+        "Cod_Provincia": 5,
+        "Canton": "Hojancha"
+    },
+    {
+        "Cod_Canton": 601,
+        "Cod_Provincia": 6,
+        "Canton": "Puntarenas"
+    },
+    {
+        "Cod_Canton": 602,
+        "Cod_Provincia": 6,
+        "Canton": "Esparza"
+    },
+    {
+        "Cod_Canton": 603,
+        "Cod_Provincia": 6,
+        "Canton": "Buenos Aires"
+    },
+    {
+        "Cod_Canton": 604,
+        "Cod_Provincia": 6,
+        "Canton": "Montes de Oro"
+    },
+    {
+        "Cod_Canton": 605,
+        "Cod_Provincia": 6,
+        "Canton": "Osa"
+    },
+    {
+        "Cod_Canton": 606,
+        "Cod_Provincia": 6,
+        "Canton": "Aguirre"
+    },
+    {
+        "Cod_Canton": 607,
+        "Cod_Provincia": 6,
+        "Canton": "Golfito"
+    },
+    {
+        "Cod_Canton": 608,
+        "Cod_Provincia": 6,
+        "Canton": "Coto Brus"
+    },
+    {
+        "Cod_Canton": 609,
+        "Cod_Provincia": 6,
+        "Canton": "Parrita"
+    },
+    {
+        "Cod_Canton": 610,
+        "Cod_Provincia": 6,
+        "Canton": "Corredores"
+    },
+    {
+        "Cod_Canton": 611,
+        "Cod_Provincia": 6,
+        "Canton": "Garabito"
+    },
+    {
+        "Cod_Canton": 701,
+        "Cod_Provincia": 7,
+        "Canton": "Limón"
+    },
+    {
+        "Cod_Canton": 702,
+        "Cod_Provincia": 7,
+        "Canton": "Pococí"
+    },
+    {
+        "Cod_Canton": 703,
+        "Cod_Provincia": 7,
+        "Canton": "Siquirres "
+    },
+    {
+        "Cod_Canton": 704,
+        "Cod_Provincia": 7,
+        "Canton": "Talamanca"
+    },
+    {
+        "Cod_Canton": 705,
+        "Cod_Provincia": 7,
+        "Canton": "Matina"
+    },
+    {
+        "Cod_Canton": 706,
+        "Cod_Provincia": 7,
+        "Canton": "Guácimo"
+    }
+]
