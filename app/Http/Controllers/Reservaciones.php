@@ -61,9 +61,12 @@ class Reservaciones extends Controller
         
         ->where('Cod_Cancha', $request->Cod_Cancha)
              ->whereBetween('Fecha', [$request->Fecha_Inicio, $request->Fecha_Fin])
-             ->where('Cod_Estado', '!=', 2)
-             ->where('Cod_Estado', '!=', 7)
-             ->where('Cod_Estado', '!=', 8)
+
+              ->where('Cod_Estado', '!=', 2)
+             //  ->where('Cod_Estado', '!=', 7)
+             //  ->where('Cod_Estado', '!=', 8)
+
+
         ->get();
 
 
@@ -141,8 +144,13 @@ $newTime = $dT->format('Y-m-d H:i');
           'rival' => $reservaciones[$i]->rival->withoutRelations(),
           'usuario_rival' => $reservaciones[$i]->rival->usuarios,
           'retador' => $reservaciones[$i]->retador->withoutRelations(),
-          'usuario_retador' => $reservaciones[$i]->retador->usuarios
-          
+          'usuario_retador' => $reservaciones[$i]->retador->usuarios,
+          'categoria' => $reservaciones[$i]->reservaciones->canchas->categorias->Nombre,
+          'provincia' => $reservaciones[$i]->reservaciones->canchas->provincias->Provincia,
+          'correo' => $reservaciones[$i]->reservaciones->canchas->usuarios->Correo,
+          'canton' => $reservaciones[$i]->reservaciones->canchas->cantones->Canton,
+          'distrito' => $reservaciones[$i]->reservaciones->canchas->distritos->Distrito,
+          'titulo' => $reservaciones[$i]->reservaciones->Titulo
           
           ]
            );
@@ -190,6 +198,7 @@ $newTime = $dT->format('Y-m-d H:i');
            'provincia' => $reservaciones[$i]->reservaciones->canchas->provincias->Provincia,
            'canton' => $reservaciones[$i]->reservaciones->canchas->cantones->Canton,
            'distrito' => $reservaciones[$i]->reservaciones->canchas->distritos->Distrito,
+           'titulo' => $reservaciones[$i]->reservaciones->Titulo
            
            
            ]
@@ -237,6 +246,7 @@ $newTime = $dT->format('Y-m-d H:i');
            'provincia' => $reservaciones[$i]->reservaciones->canchas->provincias->Provincia,
            'canton' => $reservaciones[$i]->reservaciones->canchas->cantones->Canton,
            'distrito' => $reservaciones[$i]->reservaciones->canchas->distritos->Distrito,
+           'titulo' => $reservaciones[$i]->reservaciones->Titulo
            
            
            ]
@@ -282,6 +292,7 @@ $newTime = $dT->format('Y-m-d H:i');
            'provincia' => $reservaciones[$i]->reservaciones->canchas->provincias->Provincia,
            'canton' => $reservaciones[$i]->reservaciones->canchas->cantones->Canton,
            'distrito' => $reservaciones[$i]->reservaciones->canchas->distritos->Distrito,
+           'titulo' => $reservaciones[$i]->reservaciones->Titulo
            
            
            ]
@@ -326,6 +337,7 @@ $newTime = $dT->format('Y-m-d H:i');
            'provincia' => $reservaciones[$i]->reservaciones->canchas->provincias->Provincia,
            'canton' => $reservaciones[$i]->reservaciones->canchas->cantones->Canton,
            'distrito' => $reservaciones[$i]->reservaciones->canchas->distritos->Distrito,
+           'titulo' => $reservaciones[$i]->reservaciones->Titulo
            
            
            ]
@@ -371,6 +383,7 @@ $newTime = $dT->format('Y-m-d H:i');
            'correo' => $reservaciones[$i]->reservaciones->canchas->usuarios->Correo,
            'canton' => $reservaciones[$i]->reservaciones->canchas->cantones->Canton,
            'distrito' => $reservaciones[$i]->reservaciones->canchas->distritos->Distrito,
+           'titulo' => $reservaciones[$i]->reservaciones->Titulo
            
            ]
             );
@@ -415,6 +428,7 @@ $newTime = $dT->format('Y-m-d H:i');
            'correo' => $reservaciones[$i]->reservaciones->canchas->usuarios->Correo,
            'canton' => $reservaciones[$i]->reservaciones->canchas->cantones->Canton,
            'distrito' => $reservaciones[$i]->reservaciones->canchas->distritos->Distrito,
+           'titulo' => $reservaciones[$i]->reservaciones->Titulo
            
            ]
             );
@@ -469,6 +483,7 @@ $newTime = $dT->format('Y-m-d H:i');
            'correo' => $reservaciones[$i]->reservaciones->canchas->usuarios->Correo,
            'canton' => $reservaciones[$i]->reservaciones->canchas->cantones->Canton,
            'distrito' => $reservaciones[$i]->reservaciones->canchas->distritos->Distrito,
+           'titulo' => $reservaciones[$i]->reservaciones->Titulo
            
            ]
             );

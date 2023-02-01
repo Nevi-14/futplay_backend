@@ -76,8 +76,7 @@ class HistorialPartidos extends Controller
         ]);
           
         return response()->json([
-            'message'=>'Cancha verificada.',
-            'equipo'=>$partido
+            HistorialPartido::where('Cod_Reservacion', $request->Cod_Reservacion)->get()
         ]);
         }else{
             return response()->json([

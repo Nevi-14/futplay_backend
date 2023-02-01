@@ -224,7 +224,9 @@ class Usuarios extends Controller
                 'Fecha_Nacimiento'=>$request->Fecha_Nacimiento,
                 'Telefono'=>$request->Telefono,
                 'Correo'=>$request->Correo,
-                'Contrasena'=>$request->Contrasena
+                'Contrasena'=>$request->Contrasena,
+                'Pais'=>$request->Pais ? $request->Pais : '',
+                'Cod_Pais'=>$request->Cod_Pais ? $request->Cod_Pais : '',
             ]);
           
         $user = Usuario::with('provincias','cantones','distritos', 'posiciones')->where('Correo', $request->Correo)->first();
@@ -268,7 +270,9 @@ class Usuarios extends Controller
             'Segundo_Apellido'=>$request->Segundo_Apellido,
             'Fecha_Nacimiento'=>$request->Fecha_Nacimiento,
             'Peso'=>$request->Peso,
-            'Apodo'=>$request->Apodo
+            'Apodo'=>$request->Apodo,
+            'Pais'=>$request->Pais ? $request->Pais : '',
+            'Cod_Pais'=>$request->Cod_Pais ? $request->Cod_Pais : '',
             ]);
 
         

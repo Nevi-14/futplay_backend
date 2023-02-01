@@ -22,7 +22,7 @@ class CreateEquiposTable extends Migration
             $table->boolean('Avatar')->nullable();
             $table->string('Foto')->nullable();
             $table->string('Nombre')->unique();
-            $table->string('Abreviacion');
+            $table->string('Abreviacion')->unique()->default(0);
             $table->integer('Estrellas')->nullable()->default(1);
             $table->integer('Estrellas_Anteriores')->nullable()->default(0);
             $table->string('Dureza');

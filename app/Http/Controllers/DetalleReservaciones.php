@@ -43,6 +43,7 @@ class DetalleReservaciones extends Controller
 # CREA  DETALLE DE RESERVACION
           $detalle = DetalleReservacion::create([
                 'Cod_Reservacion'=>$request->Cod_Reservacion,
+                'Reservacion_Grupal'=>$request->Reservacion_Grupal  ? $request->Reservacion_Grupal  : false,
                 'Cod_Estado'=>$request->Cod_Estado,
                 'Cod_Retador'=>$request->Cod_Retador,
                 'Cod_Rival'=>$request->Cod_Rival,
@@ -78,8 +79,15 @@ class DetalleReservaciones extends Controller
 
 # ACTUALIZA EL DETALLE DE LA RESERVACION
 
+$estado = $request->Cod_Estado ;
+if($request->Reservacion_Grupal){
+
+    $estado = $request->Confirmacion_Rival ? 4 : 7;
+}
+
         $detalle = DetalleReservacion::where('Cod_Detalle', $request->Cod_Detalle)->update([
-            'Cod_Estado'=> $request->Confirmacion_Rival ? 4 : 7,
+            'Cod_Estado'=> $request->Reservacion_Grupal ? $request->Reservacion_Grupal : false,
+            'Cod_Estado'=> $estado,
             'Confirmacion_Rival'=>$request->Confirmacion_Rival,
             'Monto_Sub_Total'=>$request->Monto_Sub_Total,
             'Monto_Total'=>$request->Monto_Total,
@@ -115,7 +123,7 @@ class DetalleReservaciones extends Controller
 # ACTUALIZA EL ESTADO DE LA RESERVACION
 
            Reservacion::where('Cod_Reservacion', $request->Cod_Reservacion)->update([
-            'Cod_Estado'=> $request->Confirmacion_Rival ? 4 : 7
+            'Cod_Estado'=> $estado
         ]);
            return response()->json([
             'message'=>'La reservacion se actualizo con éxito.',
