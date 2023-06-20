@@ -20,6 +20,7 @@ class CreateReservacionesTable extends Migration
             $table->foreignId('Cod_Estado')->references('Cod_Estado')->on('Estados')->onDelete('cascade');
             $table->boolean('Reservacion_Externa')->nullable();
             $table->string('Titulo')->nullable();
+            $table->string('Detalle')->nullable();
             $table->date('Fecha');
             $table->datetime('Hora_Inicio')->nullable();
             $table->datetime('Hora_Fin')->nullable();

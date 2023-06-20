@@ -7,6 +7,7 @@ use App\Models\Reservacion;
 use App\Models\DetalleReservacion;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Usuario;
+use App\Models\Jugador;
 use App\mail\email;
 use Illuminate\Support\Facades\Mail;
 use File;
@@ -17,7 +18,193 @@ use Carbon\Carbon;
 
 class Reservaciones extends Controller
 {
-  
+    public function getTodasReservaciones(Request $request){
+        $date = today()->format('Y-m-d');
+        $reservaciones =  DetalleReservacion::with('reservaciones','retador','rival')
+        ->whereHas('reservaciones', function ($query) use($request){
+            $query->whereBetween('Fecha', [$request->Fecha_Inicio, $request->Fecha_Fin])
+            ->where('Cod_Cancha', $request->Cod_Cancha);
+        })->orderBy('created_at', 'DESC')
+        ->get();
+
+        $new = [];
+
+        if(count($reservaciones) == 0){
+         
+
+            return $new;
+        }
+       
+
+    
+    for( $i =0; $i < count($reservaciones) ; $i++) {
+        array_push($new,
+      [
+        'usuario' =>  $reservaciones[$i]->retador->usuarios,
+        'cancha' =>  $reservaciones[$i]->reservaciones->canchas,
+        'reservacion' =>  $reservaciones[$i]->reservaciones, 
+      'detalle' =>  $reservaciones[$i]->withoutRelations(),
+      'retador' =>  $reservaciones[$i]->retador,
+      'rival' =>  $reservaciones[$i]->rival
+      
+      
+      ]
+       );
+       if($i == count($reservaciones) -1){
+        return $new;
+
+       }
+    
+    }
+       
+       
+        return response()->json($reservaciones);
+     
+     
+     } 
+    public function getReservaciones(Request $request){
+        $date = today()->format('Y-m-d');
+        $reservaciones =  DetalleReservacion::with('reservaciones','retador','rival')
+        ->whereHas('reservaciones', function ($query) use($request){
+            $query->whereBetween('Fecha', [$request->Fecha_Inicio, $request->Fecha_Fin]);
+        })->orderBy('created_at', 'DESC')
+        ->get();
+
+        $new = [];
+
+        if(count($reservaciones) == 0){
+         
+
+            return $new;
+        }
+       
+
+    
+    for( $i =0; $i < count($reservaciones) ; $i++) {
+        array_push($new,
+      [
+        'usuario' =>  $reservaciones[$i]->retador->usuarios,
+        'cancha' =>  $reservaciones[$i]->reservaciones->canchas,
+        'reservacion' =>  $reservaciones[$i]->reservaciones, 
+      'detalle' =>  $reservaciones[$i]->withoutRelations(),
+      'retador' =>  $reservaciones[$i]->retador,
+      'rival' =>  $reservaciones[$i]->rival
+      
+      
+      ]
+       );
+       if($i == count($reservaciones) -1){
+        return $new;
+
+       }
+    
+    }
+       
+       
+        return response()->json($reservaciones);
+     
+     
+     }  
+     
+     public function getReservacionesUsuario(Request $request){
+        $date = today()->format('Y-m-d');
+   
+       
+
+        $reservaciones =  DetalleReservacion::with('reservaciones','retador','rival')
+        ->whereHas('reservaciones', function ($query) use($request){
+            $query->whereBetween('Fecha', [$request->Fecha_Inicio, $request->Fecha_Fin])
+          ->where('Cod_Usuario', $request->Cod_Usuario)
+          ->where('Cod_Cancha', $request->Cod_Cancha);
+        })->orderBy('created_at', 'DESC')
+        ->get();
+
+        $new = [];
+
+        if(count($reservaciones) == 0){
+         
+
+            return $new;
+        }
+       
+
+    
+    for( $i =0; $i < count($reservaciones) ; $i++) {
+        array_push($new,
+      [
+        'usuario' =>  $reservaciones[$i]->retador->usuarios,
+        'cancha' =>  $reservaciones[$i]->reservaciones->canchas,
+        'reservacion' =>  $reservaciones[$i]->reservaciones, 
+      'detalle' =>  $reservaciones[$i]->withoutRelations(),
+      'retador' =>  $reservaciones[$i]->retador,
+      'rival' =>  $reservaciones[$i]->rival
+      
+      
+      ]
+       );
+       if($i == count($reservaciones) -1){
+        return $new;
+
+       }
+    
+    }
+       
+       
+        return response()->json($reservaciones);
+     
+     
+     }  
+     
+
+    public function getReservacionesCancha(Request $request){
+        $date = today()->format('Y-m-d');
+   
+       
+
+        $reservaciones =  DetalleReservacion::with('reservaciones','retador','rival')
+        ->whereHas('reservaciones', function ($query) use($request){
+            $query->whereBetween('Fecha', [$request->Fecha_Inicio, $request->Fecha_Fin])
+            ->where('Cod_Estado', $request->Cod_Estado)
+          ->where('Cod_Cancha', $request->Cod_Cancha);
+        })->orderBy('created_at', 'DESC')
+        ->get();
+
+        $new = [];
+
+        if(count($reservaciones) == 0){
+         
+
+            return $new;
+        }
+       
+
+    
+    for( $i =0; $i < count($reservaciones) ; $i++) {
+        array_push($new,
+      [
+        'usuario' =>  $reservaciones[$i]->retador->usuarios,
+        'cancha' =>  $reservaciones[$i]->reservaciones->canchas,
+        'reservacion' =>  $reservaciones[$i]->reservaciones, 
+      'detalle' =>  $reservaciones[$i]->withoutRelations(),
+      'retador' =>  $reservaciones[$i]->retador,
+      'rival' =>  $reservaciones[$i]->rival
+      
+      
+      ]
+       );
+       if($i == count($reservaciones) -1){
+        return $new;
+
+       }
+    
+    }
+       
+       
+        return response()->json($reservaciones);
+     
+     
+     }  
+     
    
     public function getReservacionesFuturas(Request $request ){
 
@@ -37,9 +224,11 @@ class Reservaciones extends Controller
     public function getReservacionesCanchaDia(Request $request ){
 
         $reservaciones = Reservacion::where('Cod_Cancha', $request->Cod_Cancha)->where('Fecha', $request->Fecha)
-    //  ->where('Cod_Estado', '!=', 2)
+      //->where('Cod_Estado', '!=', 2)
+      //->where('Cod_Estado', '!=', 1)
         ->where('Cod_Estado', '!=', 7)
         ->where('Cod_Estado', '!=', 8)
+        ->where('Cod_Estado', '!=', 9)
         ->get();
 
         
@@ -51,26 +240,13 @@ class Reservaciones extends Controller
     }
     public function getReservacionesCanchaRango( Request $request){
 
- 
-       
-
-       // $reservaciones = Reservacion::with('canchas','detalles')->where('Cod_Cancha', $request->Cod_Cancha)->whereBetween('Fecha', [$request->Fecha_Inicio, $request->Fecha_Fin])->get();
-       
-
         $reservaciones =  Reservacion::with('detalles','retador', 'canchas')
-        
-        ->where('Cod_Cancha', $request->Cod_Cancha)
              ->whereBetween('Fecha', [$request->Fecha_Inicio, $request->Fecha_Fin])
-
-              ->where('Cod_Estado', '!=', 2)
-             //  ->where('Cod_Estado', '!=', 7)
-             //  ->where('Cod_Estado', '!=', 8)
-
-
+            ->where('Cod_Cancha', $request->Cod_Cancha)
+            ->where('Cod_Estado', '!=', 2)
+            ->where('Cod_Estado', '!=', 9)
+            ->orderBy('created_at', 'DESC')
         ->get();
-
-
-
 
         $new = [];
 
@@ -85,9 +261,12 @@ class Reservaciones extends Controller
     for( $i =0; $i < count($reservaciones) ; $i++) {
         array_push($new,
       [
+        'usuario' =>  $reservaciones[$i]->retador->usuarios,
         'cancha' =>  $reservaciones[$i]->canchas,
         'reservacion' =>  $reservaciones[$i]->withoutRelations(), 
-      'detalle' =>  $reservaciones[$i]->detalles
+      'detalle' =>   $reservaciones[$i]->detalles->first() ?  $reservaciones[$i]->detalles->first() : null,
+      'retador' =>  $reservaciones[$i]->detalles->first() ?  $reservaciones[$i]->detalles->first()->retador : null,
+      'rival' =>  $reservaciones[$i]->detalles->first() ?  $reservaciones[$i]->detalles->first()->rival : null
       
       
       ]
@@ -101,6 +280,8 @@ class Reservaciones extends Controller
        
        
         return response()->json($reservaciones);
+     
+
     }
    
     public function getVerificarDisponibilidadReservacion( Request $request){
@@ -126,7 +307,8 @@ $newTime = $dT->format('Y-m-d H:i');
 
     public function getReservacionesMovil(Request $request){
 
-       $reservaciones =  DetalleReservacion::with('reservaciones','rival','retador')->whereRelation('retador','Cod_Usuario', $request->Cod_Usuario)->orwhereRelation('rival', 'Cod_Usuario',$request->Cod_Usuario)->get();
+       $reservaciones =  DetalleReservacion::with('reservaciones','rival','retador')->whereRelation('retador','Cod_Usuario', $request->Cod_Usuario)
+       ->orwhereRelation('rival', 'Cod_Usuario',$request->Cod_Usuario)->get();
       
         $new = [];
 
@@ -168,14 +350,73 @@ $newTime = $dT->format('Y-m-d H:i');
 
     public function getReservacionesCanceladas(Request $request){
         
-        $reservaciones =  DetalleReservacion::with('reservaciones','retador','rival')
-        
-        ->where( function ($query)  {
-            $query->whereRelation('reservaciones','Cod_Estado', '=', 8);
+        $reservaciones =  [];
+        $misEquipos = [];
+        $ids =  [];
+        $equipos = Jugador::where('Cod_Usuario',  $request->Cod_Usuario)->with('equipos','usuarios')->get();
+      
+      
+        if(count($equipos)  == 0){
+            return $reservaciones;
+           }
+                  for( $e =0; $e < count($equipos) ; $e++) {
+        $usuario = $equipos[$e]['equipos']['Cod_Usuario']; 
+        $reservacionesEquipos =  DetalleReservacion::with('reservaciones','retador','rival')
+        ->where( function ($query) use ($usuario  ) {
+            $query->whereRelation('rival','Cod_Usuario', '=', $usuario)
+            ->orwhereRelation('retador','Cod_Usuario', '=', $usuario);
+        })
+        ->WhereHas('reservaciones', function ($query) {
+            $query->where('Cod_Estado', '=', 7);
         })
         ->get();
+        for( $re =0; $re < count($reservacionesEquipos) ; $re++) {     
+            
+            
+            if(!in_array($reservacionesEquipos[$re]->Cod_Reservacion, $ids))
+            {
+
+  array_push($ids,$reservacionesEquipos[$re]->Cod_Reservacion);
+  array_push($reservaciones,
+              [
+               'cancha' => $reservacionesEquipos[$re]->reservaciones->canchas->withoutRelations(),
+              'reservacion' =>  $reservacionesEquipos[$re]->reservaciones->withoutRelations(), 
+              'detalle' =>  $reservacionesEquipos[$re]->withoutRelations(), 
+              'rival' => $reservacionesEquipos[$re]->rival->withoutRelations(),
+              'usuario_rival' => $reservacionesEquipos[$re]->rival->usuarios,
+              'retador' => $reservacionesEquipos[$re]->retador->withoutRelations(),
+              'usuario_retador' => $reservacionesEquipos[$re]->retador->usuarios,
+              'categoria' => $reservacionesEquipos[$re]->reservaciones->canchas->categorias->Nombre,
+              'correo' => $reservacionesEquipos[$re]->reservaciones->canchas->usuarios->Correo,
+              'provincia' => $reservacionesEquipos[$re]->reservaciones->canchas->provincias->Provincia,
+              'canton' => $reservacionesEquipos[$re]->reservaciones->canchas->cantones->Canton,
+              'distrito' => $reservacionesEquipos[$re]->reservaciones->canchas->distritos->Distrito,
+              'titulo' => $reservacionesEquipos[$re]->reservaciones->Titulo     
+              ]
+               );
+  }
 
 
+
+
+          
+   
+
+}
+        if($e == count($equipos) -1){
+            return $reservaciones;
+           }
+        
+        }
+
+         
+     }
+
+     public function getReservacionesAbiertas(Request $request){
+        
+        $reservaciones =  DetalleReservacion::with('reservaciones','rival','retador')
+        ->whereRelation('reservaciones', 'Cod_Estado',10)->get();
+       
          $new = [];
  
          if(count($reservaciones) == 0){
@@ -186,20 +427,19 @@ $newTime = $dT->format('Y-m-d H:i');
          for( $i =0; $i < count($reservaciones) ; $i++) {
              array_push($new,
            [
-            'cancha' =>  $reservaciones[$i]->reservaciones->canchas->withoutRelations(),
-           'reservacion' =>  $reservaciones[$i]->reservaciones->withoutRelations(), 
+             'cancha' =>  $reservaciones[$i]->reservaciones->canchas,
+             'reservacion' =>  $reservaciones[$i]->reservaciones, 
            'detalle' =>  $reservaciones[$i]->withoutRelations(), 
            'rival' => $reservaciones[$i]->rival->withoutRelations(),
            'usuario_rival' => $reservaciones[$i]->rival->usuarios,
            'retador' => $reservaciones[$i]->retador->withoutRelations(),
            'usuario_retador' => $reservaciones[$i]->retador->usuarios,
            'categoria' => $reservaciones[$i]->reservaciones->canchas->categorias->Nombre,
-           'correo' => $reservaciones[$i]->reservaciones->canchas->usuarios->Correo,
            'provincia' => $reservaciones[$i]->reservaciones->canchas->provincias->Provincia,
+           'correo' => $reservaciones[$i]->reservaciones->canchas->usuarios->Correo,
            'canton' => $reservaciones[$i]->reservaciones->canchas->cantones->Canton,
            'distrito' => $reservaciones[$i]->reservaciones->canchas->distritos->Distrito,
            'titulo' => $reservaciones[$i]->reservaciones->Titulo
-           
            
            ]
             );
@@ -210,9 +450,8 @@ $newTime = $dT->format('Y-m-d H:i');
          
          }
          
+         
      }
-
-     
      public function getReservacionesCanceladasUsuarios(Request $request){
         $cod_usuario = $request->Cod_Usuario;
         $reservaciones =  DetalleReservacion::with('reservaciones','retador','rival')
@@ -260,239 +499,317 @@ $newTime = $dT->format('Y-m-d H:i');
          
      }
     public function getReservacionesEnviadas(Request $request){
+        $reservaciones =  [];
+        $misEquipos = [];
+        $ids =  [];
         $cod_usuario = $request->Cod_Usuario;
-        $reservaciones =  DetalleReservacion::with('reservaciones','retador','rival')
-        
-        ->where( function ($query) use ($cod_usuario ) {
-            $query->whereRelation('retador','Cod_Usuario', '=', $cod_usuario)
+        $equipos = Jugador::where('Cod_Usuario',  $request->Cod_Usuario)->with('equipos','usuarios')->get();
+        if(count($equipos)  == 0){
+            return $reservaciones;
+           }
+           
+        for( $e =0; $e < count($equipos) ; $e++) {
+        $usuario = $equipos[$e]['equipos']['Cod_Usuario']; 
+        $reservacionesEquipos =  DetalleReservacion::with('reservaciones','retador','rival')
+        ->where( function ($query) use ($cod_usuario, $usuario  ) {
+            $query->whereRelation('retador','Cod_Usuario', '=',$usuario)
             ->whereRelation('reservaciones','Cod_Estado', '=', 2);
         })
         ->get();
+        for( $re =0; $re < count($reservacionesEquipos) ; $re++) {     
+            
+            if(!in_array($reservacionesEquipos[$re]->Cod_Reservacion, $ids))
+            {
+
+  array_push($ids,$reservacionesEquipos[$re]->Cod_Reservacion);
+
+  array_push($reservaciones,
+  [
+   'cancha' => $reservacionesEquipos[$re]->reservaciones->canchas->withoutRelations(),
+  'reservacion' =>  $reservacionesEquipos[$re]->reservaciones->withoutRelations(), 
+  'detalle' =>  $reservacionesEquipos[$re]->withoutRelations(), 
+  'rival' => $reservacionesEquipos[$re]->rival->withoutRelations(),
+  'usuario_rival' => $reservacionesEquipos[$re]->rival->usuarios,
+  'retador' => $reservacionesEquipos[$re]->retador->withoutRelations(),
+  'usuario_retador' => $reservacionesEquipos[$re]->retador->usuarios,
+  'categoria' => $reservacionesEquipos[$re]->reservaciones->canchas->categorias->Nombre,
+  'correo' => $reservacionesEquipos[$re]->reservaciones->canchas->usuarios->Correo,
+  'provincia' => $reservacionesEquipos[$re]->reservaciones->canchas->provincias->Provincia,
+  'canton' => $reservacionesEquipos[$re]->reservaciones->canchas->cantones->Canton,
+  'distrito' => $reservacionesEquipos[$re]->reservaciones->canchas->distritos->Distrito,
+  'titulo' => $reservacionesEquipos[$re]->reservaciones->Titulo     
+  ]
+   );
+  }
 
 
-         $new = [];
- 
-         if(count($reservaciones) == 0){
-          
- 
-             return $new;
-         }
-         for( $i =0; $i < count($reservaciones) ; $i++) {
-             array_push($new,
-           [
-            'cancha' =>  $reservaciones[$i]->reservaciones->canchas->withoutRelations(),
-           'reservacion' =>  $reservaciones[$i]->reservaciones->withoutRelations(), 
-           'detalle' =>  $reservaciones[$i]->withoutRelations(), 
-           'rival' => $reservaciones[$i]->rival->withoutRelations(),
-           'usuario_rival' => $reservaciones[$i]->rival->usuarios,
-           'retador' => $reservaciones[$i]->retador->withoutRelations(),
-           'usuario_retador' => $reservaciones[$i]->retador->usuarios,
-           'categoria' => $reservaciones[$i]->reservaciones->canchas->categorias->Nombre,
-           'correo' => $reservaciones[$i]->reservaciones->canchas->usuarios->Correo,
-           'provincia' => $reservaciones[$i]->reservaciones->canchas->provincias->Provincia,
-           'canton' => $reservaciones[$i]->reservaciones->canchas->cantones->Canton,
-           'distrito' => $reservaciones[$i]->reservaciones->canchas->distritos->Distrito,
-           'titulo' => $reservaciones[$i]->reservaciones->Titulo
-           
-           
-           ]
-            );
-            if($i == count($reservaciones) -1){
-             return $new;
- 
-            }
+  
+   
+
+}
+        if($e == count($equipos) -1){
+            return $reservaciones;
+           }
+        
+        }
          
-         }
+ 
          
      }
 
+
+
     public function getReservacionesRecibidas(Request $request){
+
+
+        $reservaciones =  [];
+        $misEquipos = [];
+        $ids =  [];
         $cod_usuario = $request->Cod_Usuario;
-        $reservaciones =  DetalleReservacion::with('reservaciones','retador','rival')
-        
-        ->where( function ($query) use ($cod_usuario ) {
-            $query->whereRelation('rival','Cod_Usuario', '=', $cod_usuario);
+        $equipos = Jugador::where('Cod_Usuario',  $request->Cod_Usuario)->with('equipos','usuarios')->get();
+        if(count($equipos)  == 0){
+            return $reservaciones;
+           }
+           
+        for( $e =0; $e < count($equipos) ; $e++) {
+        $usuario = $equipos[$e]['equipos']['Cod_Usuario']; 
+        $reservacionesEquipos =  DetalleReservacion::with('reservaciones','retador','rival')
+        ->where( function ($query) use ($usuario  ) {
+            $query->whereRelation('rival','Cod_Usuario', '=',$usuario)
+            ->whereRelation('reservaciones','Cod_Estado', '=', 2);
         })
         ->where('Cod_Estado', 3)
         ->get();
-         $new = [];
- 
-         if(count($reservaciones) == 0){
-          
- 
-             return $new;
-         }
-         for( $i =0; $i < count($reservaciones) ; $i++) {
-             array_push($new,
-           [
-             'cancha' =>  $reservaciones[$i]->reservaciones->canchas,
-             'reservacion' =>  $reservaciones[$i]->reservaciones, 
-           'detalle' =>  $reservaciones[$i]->withoutRelations(), 
-           'rival' => $reservaciones[$i]->rival->withoutRelations(),
-           'usuario_rival' => $reservaciones[$i]->rival->usuarios,
-           'retador' => $reservaciones[$i]->retador->withoutRelations(),
-           'usuario_retador' => $reservaciones[$i]->retador->usuarios,
-           'categoria' => $reservaciones[$i]->reservaciones->canchas->categorias->Nombre,
-           'correo' => $reservaciones[$i]->reservaciones->canchas->usuarios->Correo,
-           'provincia' => $reservaciones[$i]->reservaciones->canchas->provincias->Provincia,
-           'canton' => $reservaciones[$i]->reservaciones->canchas->cantones->Canton,
-           'distrito' => $reservaciones[$i]->reservaciones->canchas->distritos->Distrito,
-           'titulo' => $reservaciones[$i]->reservaciones->Titulo
-           
-           
-           ]
-            );
-            if($i == count($reservaciones) -1){
-             return $new;
- 
-            }
+        for( $re =0; $re < count($reservacionesEquipos) ; $re++) {         
+            if(!in_array($reservacionesEquipos[$re]->Cod_Reservacion, $ids))
+            {
+                array_push($ids,$reservacionesEquipos[$re]->Cod_Reservacion);
+
+    array_push($reservaciones,
+    [
+     'cancha' => $reservacionesEquipos[$re]->reservaciones->canchas->withoutRelations(),
+    'reservacion' =>  $reservacionesEquipos[$re]->reservaciones->withoutRelations(), 
+    'detalle' =>  $reservacionesEquipos[$re]->withoutRelations(), 
+    'rival' => $reservacionesEquipos[$re]->rival->withoutRelations(),
+    'usuario_rival' => $reservacionesEquipos[$re]->rival->usuarios,
+    'retador' => $reservacionesEquipos[$re]->retador->withoutRelations(),
+    'usuario_retador' => $reservacionesEquipos[$re]->retador->usuarios,
+    'categoria' => $reservacionesEquipos[$re]->reservaciones->canchas->categorias->Nombre,
+    'correo' => $reservacionesEquipos[$re]->reservaciones->canchas->usuarios->Correo,
+    'provincia' => $reservacionesEquipos[$re]->reservaciones->canchas->provincias->Provincia,
+    'canton' => $reservacionesEquipos[$re]->reservaciones->canchas->cantones->Canton,
+    'distrito' => $reservacionesEquipos[$re]->reservaciones->canchas->distritos->Distrito,
+    'titulo' => $reservacionesEquipos[$re]->reservaciones->Titulo     
+    ]
+     );
+
+
+}
+   
+}
+        
+
+if($e == count($equipos) -1){
+    return $reservaciones;
+   }
+        }
          
-         }
+
+
+
+
+         
          
      }
      public function getReservacionesHistorial(Request $request){
-        $cod_usuario = $request->Cod_Usuario;
-        $reservaciones =  DetalleReservacion::with('reservaciones','retador','rival')
-        ->where( function ($query) use ($cod_usuario  ) {
-            $query->whereRelation('rival','Cod_Usuario', '=', $cod_usuario)
-            ->orwhereRelation('retador','Cod_Usuario', '=', $cod_usuario);
+        $reservaciones =  [];
+        $misEquipos = [];
+        $ids =  [];
+        $equipos = Jugador::where('Cod_Usuario',  $request->Cod_Usuario)->with('equipos','usuarios')->get();
+        if(count($equipos)  == 0){
+            return $reservaciones;
+           }
+           
+       
+       
+        for( $e =0; $e < count($equipos) ; $e++) {
+        $usuario = $equipos[$e]['equipos']['Cod_Usuario']; 
+        $reservacionesEquipos =  DetalleReservacion::with('reservaciones','retador','rival')
+        ->where( function ($query) use ($usuario  ) {
+            $query->whereRelation('rival','Cod_Usuario', '=', $usuario)
+            ->orwhereRelation('retador','Cod_Usuario', '=', $usuario);
         })
         ->WhereHas('reservaciones', function ($query) {
-            $query->where('Cod_Estado', '=', 7);
+            $query->where('Cod_Estado', '=', 7)
+            ->orWhere('Cod_Estado', '=', 6);
         })
         ->get();
-         $new = [];
- 
-         if(count($reservaciones) == 0){
-          
- 
-             return $new;
-         }
-         for( $i =0; $i < count($reservaciones) ; $i++) {
-             array_push($new,
-           [
-             'cancha' =>  $reservaciones[$i]->reservaciones->canchas,
-             'reservacion' =>  $reservaciones[$i]->reservaciones, 
-           'detalle' =>  $reservaciones[$i]->withoutRelations(), 
-           'rival' => $reservaciones[$i]->rival->withoutRelations(),
-           'usuario_rival' => $reservaciones[$i]->rival->usuarios,
-           'retador' => $reservaciones[$i]->retador->withoutRelations(),
-           'usuario_retador' => $reservaciones[$i]->retador->usuarios,
-           'categoria' => $reservaciones[$i]->reservaciones->canchas->categorias->Nombre,
-           'provincia' => $reservaciones[$i]->reservaciones->canchas->provincias->Provincia,
-           'correo' => $reservaciones[$i]->reservaciones->canchas->usuarios->Correo,
-           'canton' => $reservaciones[$i]->reservaciones->canchas->cantones->Canton,
-           'distrito' => $reservaciones[$i]->reservaciones->canchas->distritos->Distrito,
-           'titulo' => $reservaciones[$i]->reservaciones->Titulo
-           
-           ]
-            );
-            if($i == count($reservaciones) -1){
-             return $new;
- 
-            }
-         
-         }
+        for( $re =0; $re < count($reservacionesEquipos) ; $re++) {
+            
+            
+            if(!in_array($reservacionesEquipos[$re]->Cod_Reservacion, $ids))
+            {
+
+  array_push($ids,$reservacionesEquipos[$re]->Cod_Reservacion);
+  array_push($reservaciones,
+  [
+   'cancha' => $reservacionesEquipos[$re]->reservaciones->canchas->withoutRelations(),
+  'reservacion' =>  $reservacionesEquipos[$re]->reservaciones->withoutRelations(), 
+  'detalle' =>  $reservacionesEquipos[$re]->withoutRelations(), 
+  'rival' => $reservacionesEquipos[$re]->rival->withoutRelations(),
+  'usuario_rival' => $reservacionesEquipos[$re]->rival->usuarios,
+  'retador' => $reservacionesEquipos[$re]->retador->withoutRelations(),
+  'usuario_retador' => $reservacionesEquipos[$re]->retador->usuarios,
+  'categoria' => $reservacionesEquipos[$re]->reservaciones->canchas->categorias->Nombre,
+  'correo' => $reservacionesEquipos[$re]->reservaciones->canchas->usuarios->Correo,
+  'provincia' => $reservacionesEquipos[$re]->reservaciones->canchas->provincias->Provincia,
+  'canton' => $reservacionesEquipos[$re]->reservaciones->canchas->cantones->Canton,
+  'distrito' => $reservacionesEquipos[$re]->reservaciones->canchas->distritos->Distrito,
+  'titulo' => $reservacionesEquipos[$re]->reservaciones->Titulo     
+  ]
+   );
+  }
+
+
+
+
+       
+   
+
+}
+        if($e == count($equipos) -1){
+            return $reservaciones;
+           }
+        
+        }
          
      }
      public function  getReservacionesRevision(Request $request){
-        $cod_usuario = $request->Cod_Usuario;
-        $reservaciones =  DetalleReservacion::with('reservaciones','retador','rival')
-        ->where( function ($query) use ($cod_usuario  ) {
-            $query->whereRelation('rival','Cod_Usuario', '=', $cod_usuario)
-            ->orwhereRelation('retador','Cod_Usuario', '=', $cod_usuario);
+        $reservaciones =  [];
+        $misEquipos = [];
+        $ids =  [];
+        $equipos = Jugador::where('Cod_Usuario',  $request->Cod_Usuario)->with('equipos','usuarios')->get();
+        if(count($equipos)  == 0){
+            return $reservaciones;
+           }
+           
+      
+        for( $e =0; $e < count($equipos) ; $e++) {
+        $usuario = $equipos[$e]['equipos']['Cod_Usuario']; 
+        $reservacionesEquipos =  DetalleReservacion::with('reservaciones','retador','rival')
+        ->where( function ($query) use ($usuario  ) {
+            $query->whereRelation('rival','Cod_Usuario', '=', $usuario)
+            ->orwhereRelation('retador','Cod_Usuario', '=', $usuario);
         })
         ->WhereHas('reservaciones', function ($query) {
             $query->where('Cod_Estado', '=', 8);
         })
         ->get();
-         $new = [];
- 
-         if(count($reservaciones) == 0){
-          
- 
-             return $new;
-         }
-         for( $i =0; $i < count($reservaciones) ; $i++) {
-             array_push($new,
-           [
-             'cancha' =>  $reservaciones[$i]->reservaciones->canchas,
-             'reservacion' =>  $reservaciones[$i]->reservaciones, 
-           'detalle' =>  $reservaciones[$i]->withoutRelations(), 
-           'rival' => $reservaciones[$i]->rival->withoutRelations(),
-           'usuario_rival' => $reservaciones[$i]->rival->usuarios,
-           'retador' => $reservaciones[$i]->retador->withoutRelations(),
-           'usuario_retador' => $reservaciones[$i]->retador->usuarios,
-           'categoria' => $reservaciones[$i]->reservaciones->canchas->categorias->Nombre,
-           'provincia' => $reservaciones[$i]->reservaciones->canchas->provincias->Provincia,
-           'correo' => $reservaciones[$i]->reservaciones->canchas->usuarios->Correo,
-           'canton' => $reservaciones[$i]->reservaciones->canchas->cantones->Canton,
-           'distrito' => $reservaciones[$i]->reservaciones->canchas->distritos->Distrito,
-           'titulo' => $reservaciones[$i]->reservaciones->Titulo
-           
-           ]
-            );
-            if($i == count($reservaciones) -1){
-             return $new;
- 
-            }
-         
-         }
-         
+        for( $re =0; $re < count($reservacionesEquipos) ; $re++) {   
+            
+
+            if(!in_array($reservacionesEquipos[$re]->Cod_Reservacion, $ids))
+            {
+
+  array_push($ids,$reservacionesEquipos[$re]->Cod_Reservacion);
+    array_push($reservaciones,
+    [
+     'cancha' => $reservacionesEquipos[$re]->reservaciones->canchas->withoutRelations(),
+    'reservacion' =>  $reservacionesEquipos[$re]->reservaciones->withoutRelations(), 
+    'detalle' =>  $reservacionesEquipos[$re]->withoutRelations(), 
+    'rival' => $reservacionesEquipos[$re]->rival->withoutRelations(),
+    'usuario_rival' => $reservacionesEquipos[$re]->rival->usuarios,
+    'retador' => $reservacionesEquipos[$re]->retador->withoutRelations(),
+    'usuario_retador' => $reservacionesEquipos[$re]->retador->usuarios,
+    'categoria' => $reservacionesEquipos[$re]->reservaciones->canchas->categorias->Nombre,
+    'correo' => $reservacionesEquipos[$re]->reservaciones->canchas->usuarios->Correo,
+    'provincia' => $reservacionesEquipos[$re]->reservaciones->canchas->provincias->Provincia,
+    'canton' => $reservacionesEquipos[$re]->reservaciones->canchas->cantones->Canton,
+    'distrito' => $reservacionesEquipos[$re]->reservaciones->canchas->distritos->Distrito,
+    'titulo' => $reservacionesEquipos[$re]->reservaciones->Titulo     
+    ]
+     );
+
+
+}
+
+
+
+}
+        if($e == count($equipos) -1){
+            return $reservaciones;
+           }
+        
+        }
      }
      
      public function getReservacionesConfirmadas(Request $request){
+
+
+
+        $reservaciones =  [];
+        $ids =  [];
+        $misEquipos = [];
         $date =  Carbon::now('America/Costa_Rica');
         $newDate = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)
         ->format('Y-m-d');
-        $cod_usuario = $request->Cod_Usuario;
-//  $newDate;
-        $reservaciones =  DetalleReservacion::with('reservaciones','retador','rival')
-        
-        ->where( function ($query) use ($cod_usuario) {
-            $query->whereRelation('rival','Cod_Usuario', '=', $cod_usuario)
-            ->orwhereRelation('retador','Cod_Usuario', '=', $cod_usuario);
+        $equipos = Jugador::where('Cod_Usuario',  $request->Cod_Usuario)->with('equipos','usuarios')->get();
+       if(count($equipos)  == 0){
+        return $reservaciones;
+       }
+       
+        for( $e =0; $e < count($equipos) ; $e++) {
+        $usuario = $equipos[$e]['equipos']['Cod_Usuario']; 
+        $reservacionesEquipos =  DetalleReservacion::with('reservaciones','retador','rival')
+        ->where( function ($query) use ($usuario  ) {
+            $query->whereRelation('rival','Cod_Usuario', '=', $usuario)
+            ->orwhereRelation('retador','Cod_Usuario', '=', $usuario);
         })
         ->WhereHas('reservaciones', function ($query) use ($newDate) {
             $query->where('Fecha', '>=', $newDate);
         })
         ->WhereHas('reservaciones', function ($query) {
-            $query->where('Cod_Estado', '=', 4);
+            $query->where('Cod_Estado', '=', 4)
+            ->orWhere('Cod_Estado', '=', 5);
+
         })
         ->get();
-       
-         $new = [];
- 
-         if(count($reservaciones) == 0){
-          
- 
-             return $new;
-         }
-         for( $i =0; $i < count($reservaciones) ; $i++) {
-             array_push($new,
-           [
-             'cancha' =>  $reservaciones[$i]->reservaciones->canchas,
-             'reservacion' =>  $reservaciones[$i]->reservaciones, 
-           'detalle' =>  $reservaciones[$i]->withoutRelations(), 
-           'rival' => $reservaciones[$i]->rival->withoutRelations(),
-           'usuario_rival' => $reservaciones[$i]->rival->usuarios,
-           'retador' => $reservaciones[$i]->retador->withoutRelations(),
-           'usuario_retador' => $reservaciones[$i]->retador->usuarios,
-           'categoria' => $reservaciones[$i]->reservaciones->canchas->categorias->Nombre,
-           'provincia' => $reservaciones[$i]->reservaciones->canchas->provincias->Provincia,
-           'correo' => $reservaciones[$i]->reservaciones->canchas->usuarios->Correo,
-           'canton' => $reservaciones[$i]->reservaciones->canchas->cantones->Canton,
-           'distrito' => $reservaciones[$i]->reservaciones->canchas->distritos->Distrito,
-           'titulo' => $reservaciones[$i]->reservaciones->Titulo
-           
-           ]
-            );
-            if($i == count($reservaciones) -1){
-             return $new;
- 
+        for( $re =0; $re < count($reservacionesEquipos) ; $re++) {         
+            if(!in_array($reservacionesEquipos[$re]->Cod_Reservacion, $ids))
+            {
+                array_push($ids,$reservacionesEquipos[$re]->Cod_Reservacion);
+                array_push($reservaciones,
+                [
+                'Cod_Reservacion'=>$reservacionesEquipos[$re]->reservaciones->withoutRelations()->Cod_Reservacion, 
+                 'cancha' => $reservacionesEquipos[$re]->reservaciones->canchas->withoutRelations(),
+                'reservacion' =>  $reservacionesEquipos[$re]->reservaciones->withoutRelations(), 
+                'detalle' =>  $reservacionesEquipos[$re]->withoutRelations(), 
+                'rival' => $reservacionesEquipos[$re]->rival->withoutRelations(),
+                'usuario_rival' => $reservacionesEquipos[$re]->rival->usuarios,
+                'retador' => $reservacionesEquipos[$re]->retador->withoutRelations(),
+                'usuario_retador' => $reservacionesEquipos[$re]->retador->usuarios,
+                'categoria' => $reservacionesEquipos[$re]->reservaciones->canchas->categorias->Nombre,
+                'correo' => $reservacionesEquipos[$re]->reservaciones->canchas->usuarios->Correo,
+                'provincia' => $reservacionesEquipos[$re]->reservaciones->canchas->provincias->Provincia,
+                'canton' => $reservacionesEquipos[$re]->reservaciones->canchas->cantones->Canton,
+                'distrito' => $reservacionesEquipos[$re]->reservaciones->canchas->distritos->Distrito,
+                'titulo' => $reservacionesEquipos[$re]->reservaciones->Titulo     
+                ]
+                 );
+            
+            
             }
-         
-         }
+
+}
+        if($e == count($equipos) -1){
+            return $reservaciones;
+           }
+        
+        }
+
+
+
+
          
      }
 
@@ -605,28 +922,27 @@ $newTime = $dT->format('Y-m-d H:i');
 
         $verificar = Reservacion::where('Cod_Reservacion', $request->Cod_Reservacion)->first();
 
-
+ 
+      
     
-        if($verificar['Cod_Estado'] == 2  || $verificar['Reservacion_Externa']){
-            
-            $reservacion = Reservacion::where('Cod_Reservacion',$request->Cod_Reservacion)->delete();
-  
-            if($reservacion == 1){
-      
-              return response()->json([
-                  'action'=>true,
-                  'message'=>'La reservacion se borro con exito.',
-                  'reservacion'=>$reservacion
-              ]);
-      
-            }else{
-      
-              return response()->json([
-                  'action'=>false,
-                  'message'=>'Error Borrando La Reservacion',
-                  'reservacion'=>$reservacion
-              ]);
-          }
+        if($verificar['Cod_Estado'] == 2  || $verificar['Cod_Estado'] == 9  ||  $verificar['Reservacion_Externa']){
+          
+
+            Reservacion::where('Cod_Reservacion', $request->Cod_Reservacion)->update([
+                'Cod_Estado'=>9
+                
+                ]);
+
+DetalleReservacion::where('Cod_Reservacion', $request->Cod_Reservacion)->update([
+                    'Cod_Estado'=>9,
+                    'Notas_Estado'=> 'Reservacion eliminada'
+                    
+                    ]);
+                    return response()->json([
+                        'action'=>true,
+                        'message'=>'La reservacion se borro con exito.',
+                        'reservacion'=>$request
+                    ]);
 
 
         }else{

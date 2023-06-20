@@ -14,7 +14,7 @@ class Jugadores extends Controller
     $jugador = Jugador::where('Cod_Usuario',  $request->Cod_Usuario)->where('Cod_Equipo',  $request->Cod_Equipo)->get();
     if(count($jugador) == 0){
          
-        $solicitudes = Solicitud::where('Cod_Usuario',  $request->Cod_Usuario)->get();
+        $solicitudes = Solicitud::where('Cod_Usuario',  $request->Cod_Usuario)->where('Cod_Equipo',  $request->Cod_Equipo)->get();
         return $solicitudes;
     }
     return  $jugador;

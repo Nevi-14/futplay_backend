@@ -158,6 +158,43 @@ class Canchas extends Controller
         }
      
     }
+
+    public function getPerfilCancha($Cod_Cancha){
+
+        
+
+        $canchas = Cancha::where('Cod_Cancha',  $Cod_Cancha)->with('provincias','cantones','distritos','categorias','usuarios')->get();
+         
+        $new = [];
+
+        if(count($canchas) == 0){
+         
+
+            return $new;
+        }
+        for( $i =0; $i < count($canchas) ; $i++) {
+            array_push($new,
+          [
+            'nombre' =>  $canchas[$i]->Nombre, 
+            'cancha' =>  $canchas[$i]->withoutRelations(), 
+            'horario' => $canchas[$i]->horarios,
+          'provincia' => $canchas[$i]->provincias->Provincia,
+          'canton' => $canchas[$i]->cantones->Canton,
+          'distrito' => $canchas[$i]->distritos->Distrito,
+          'categoria' => $canchas[$i]->categorias->Nombre,
+          'correo' => $canchas[$i]->usuarios->Correo
+          
+          
+          ]
+           );
+           if($i == count($canchas) -1){
+            return $new;
+
+           }
+        
+        }
+
+    }
     public function getUsuarioCanchas($Cod_Usuario){
 
         

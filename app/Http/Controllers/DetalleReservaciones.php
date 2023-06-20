@@ -61,7 +61,7 @@ class DetalleReservaciones extends Controller
                 'Monto_Sub_Total'=>$request->Monto_Sub_Total,
                 'Monto_Total'=>$request->Monto_Total,
                 'Pendiente'=>$request->Pendiente,
-                'Notas_Estado'=>$request->Notas_Estado,
+                'Notas_Estado'=> !$request->Reservacion_Grupal  ? 'Reservacion confirmada'  : $request->Notas_Estado,
             ]);
           
             return $detalle;
@@ -86,13 +86,15 @@ if($request->Reservacion_Grupal){
 }
 
         $detalle = DetalleReservacion::where('Cod_Detalle', $request->Cod_Detalle)->update([
-            'Cod_Estado'=> $request->Reservacion_Grupal ? $request->Reservacion_Grupal : false,
+            'Reservacion_Grupal'=> $request->Reservacion_Grupal ? $request->Reservacion_Grupal : false,
             'Cod_Estado'=> $estado,
             'Confirmacion_Rival'=>$request->Confirmacion_Rival,
             'Monto_Sub_Total'=>$request->Monto_Sub_Total,
             'Monto_Total'=>$request->Monto_Total,
+            'Cod_Rival'=>$request->Cod_Rival,
+            'Cod_Retador'=>$request->Cod_Retador,
             'Pendiente'=>$request->Pendiente,
-            'Notas_Estado'=> $request->Confirmacion_Rival ? '' : 'Reservacion Cancelada'
+            'Notas_Estado'=> $request->Confirmacion_Rival ? 'Reservacion confirmada' : 'Reservacion Cancelada'
         ]);
             
      

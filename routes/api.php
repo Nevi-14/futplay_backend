@@ -38,9 +38,14 @@ Route::get('get/estados', [Estados::class, 'getEstados']);
 Route::get('get/login-in/{value}', [Usuarios::class, 'login']);
 Route::get('get/login-in-movil/{value}', [Usuarios::class, 'loginMovil']);
 Route::post('post/usuario', [Usuarios::class, 'postUser']);
+Route::get('get/usuario/{Cod_Usuario}', [Usuarios::class, 'getUser']);
+
+Route::get('get/usuarios/foto/{Cod_Usuario}', [Usuarios::class, 'getImage']);
+
 
 Route::get('get/lista/canchas', [Canchas::class, 'getListaCanchas']);
 Route::get('get/canchas/{Cod_Usuario}', [Canchas::class, 'getUsuarioCanchas']);
+Route::get('get/perfil/cancha/{Cod_Cancha}', [Canchas::class, 'getPerfilCancha']);
 Route::post('post/canchas', [Canchas::class, 'postCancha']);
 Route::put('put/canchas/{Cod_Cancha}', [Canchas::class, 'putCancha']);
 Route::put('put/estado/cancha/{Cod_Cancha}', [Canchas::class, 'putEstadoCancha']);
@@ -72,7 +77,7 @@ Route::post('post/correo/reservacion', [Reservaciones::class, 'CorreoReservacion
 
 Route::post('post/token/verification', [Usuarios::class, 'tokenVerification']);
 Route::post('post/usuario/password', [Usuarios::class, 'putUserPassword']);
-
+Route::get('get/reservaciones/abiertas', [Reservaciones::class, 'getReservacionesAbiertas']);
 
 Route::post('post/reservacion/cancha/{Cod_Cancha}', [Reservaciones::class, 'postReservacion']);
 Route::get('get/reservaciones/cancha/{Cod_Cancha}/{Fecha}', [Reservaciones::class, 'getReservacionesCanchaDia']);
@@ -83,11 +88,22 @@ Route::get('get/disponibilidad/reservaciones/cancha/{Cod_Cancha}/{Hora_Inicio}/{
 Route::post('post/detalle/reservacion/{Cod_Reservacion}', [DetalleReservaciones::class, 'postDetalle']);
 Route::delete('delete/usuario/{Cod_Usuario}', [Usuarios::class, 'deleteUser']);
 Route::put('put/detalle/reservacion/{Cod_Reservacion}', [DetalleReservaciones::class, 'putDetalleReservacion']);
+Route::put('put/reservacion/{Cod_Reservacion}', [Reservaciones::class, 'putReservacion']);
 
 Route::get('get/lista/equipos/{Cod_Usuario}', [Equipos::class, 'getEquipos']);
 Route::get('get/clasificacion/equipos', [Equipos::class, 'getEquiposClasificacion']);
 Route::get('get/mis/equipos/{Cod_Usuario}', [Equipos::class, 'getUsuarioEquipos']);
 Route::post('post/equipo', [Equipos::class, 'postEquipo']);
+
+
+
+Route::post('post/validar/puntaje', [HistorialPartidos::class, 'repararPuntaje']);
+
+
+
+
+
+
 Route::get('get/filtro/canchas/{Cod_Provincia}/{Cod_Canton}/{Cod_Distrito}/{Cod_Categoria}', [Canchas::class, 'getFiltroListaCanchas']);
 
 Route::get('get/filtro/usuarios/{Cod_Provincia}/{Cod_Canton}/{Cod_Distrito}/{Cod_Posicion}', [Usuarios::class, 'getFiltroUsuarios']);
@@ -101,7 +117,7 @@ Route::put('put/avatar/equipo/{Cod_Equipo}', [Equipos::class, 'putEquipoAvatar']
 
 
 
-
+Route::get('get/perfil/equipo/{Cod_Equipo}', [Equipos::class, 'getPerfilEquipo']);
 Route::post('post/foto/equipo/{Cod_Equipo}', [Equipos::class, 'postFotoEquipo']);
 Route::put('put/equipo/{Cod_Equipo}', [Equipos::class, 'putEquipo']);
 Route::put('put/estadistica/equipo/{Cod_Equipo}', [Equipos::class, 'putEstadisticaEquipo']);
@@ -120,7 +136,10 @@ Route::get('get/solicitudes/enviadas/equipo/{Cod_Equipo}', [Solicitudes::class, 
 Route::get('get/solicitudes/enviadas/usuario/{Cod_Usuario}', [Solicitudes::class, 'getSolicitudesEnviadasUsuarios']);
 Route::post('post/solicitudes/equipo/{Cod_Equipo}', [Solicitudes::class, 'postSolicitud']);
 Route::put('put/solicitud/{Cod_Solicitud}', [Solicitudes::class, 'putSolicitud']);
-
+Route::get('get/reservaciones/{Fecha_Inicio}/{Fecha_Fin}', [Reservaciones::class, 'getReservaciones']);
+Route::get('get/reservacionescancha/{Fecha_Inicio}/{Fecha_Fin}/{Cod_Cancha}', [Reservaciones::class, 'getTodasReservaciones']);
+Route::get('get/reservaciones/cancha/{Cod_Cancha}/{Fecha_Inicio}/{Fecha_Fin}/{Cod_Estado}', [Reservaciones::class, 'getReservacionesCancha']);
+Route::get('get/reservaciones/usuario/{Cod_Cancha}/{Fecha_Inicio}/{Fecha_Fin}/{Cod_Usuario}', [Reservaciones::class, 'getReservacionesUsuario']);
 Route::get('get/reservaciones/enviadas/usuario/{Cod_Usuario}', [Reservaciones::class, 'getReservacionesEnviadas']);
 Route::get('get/reservaciones/recibidas/usuario/{Cod_Usuario}', [Reservaciones::class, 'getReservacionesRecibidas']);
 Route::get('get/reservaciones/canceladas/usuario/{Cod_Usuario}', [Reservaciones::class, 'getReservacionesCanceladasUsuarios']);

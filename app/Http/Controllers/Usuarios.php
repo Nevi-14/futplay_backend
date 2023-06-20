@@ -16,35 +16,62 @@ class Usuarios extends Controller
     public function getUsers(Request $request){
  
         $usuarios = Usuario::with('provincias','cantones','distritos', 'posiciones')->where('Cod_Usuario','!=' , $request->Cod_Usuario)->get();
-
         $new = [];
-
         if(count($usuarios) == 0){
-         
-
-            return $new;
+            return response([], 404);
         }
         for( $i =0; $i < count($usuarios) ; $i++) {
-            array_push($new,
+        array_push($new,
           [
-            'nombre' =>  $usuarios[$i]->Nombre .' '. $usuarios[$i]->Primer_Apellido, 
-            'usuario' =>  $usuarios[$i]->withoutRelations(), 
+          'nombre' =>  $usuarios[$i]->Nombre .' '. $usuarios[$i]->Primer_Apellido, 
+          'usuario' =>  $usuarios[$i]->withoutRelations(), 
           'provincia' => $usuarios[$i]->provincias->Provincia,
           'canton' => $usuarios[$i]->cantones->Canton,
           'distrito' => $usuarios[$i]->distritos->Distrito,
           'posicion' => $usuarios[$i]->posiciones->Posicion
-        
-          
-          
           ]
            );
            if($i == count($usuarios) -1){
             return $new;
-
            }
         
-        }
+        } 
+    }
+    
 
+    public function  getImage(Request $request){
+    $user = Usuario::where('Cod_Usuario', $request->Cod_Usuario)->first();
+    if($user !=null){
+    $path = ltrim($user->Foto, $user->Foto[0]);
+    if($user->Avatar){
+       return response()->json('assets/profile/avatars/'.$path, 200);
+    }      
+    if(file_exists($path)){
+        return response()->json('https://futplaycompany.com/api_test/'.$path, 200);
+    }else{
+        return response([], 404);
+    }
+    }
+    return response([], 404);
+     
+    }
+
+    public function getUser(Request $request){
+        $user = Usuario::with('provincias','cantones','distritos', 'posiciones')->where('Cod_Usuario', $request->Cod_Usuario)->first();       
+        if($user != null ){
+            return response()->json([
+                'message'=>'Bienvenido',
+                'nombre' =>  $user->Nombre .' '. $user->Primer_Apellido,
+                'usuario'=>$user->makeVisible(['Contrasena'])->withoutRelations(),
+                'provincia'=>$user->provincias->Provincia,
+                'canton'=>$user->cantones->Canton,
+                'distrito'=>$user->distritos->Distrito,
+                'posicion'=>$user->posiciones->Posicion,
+            ]);
+         
+        }
+        return response([], 404);
+    
 
        
     }
@@ -152,13 +179,22 @@ class Usuarios extends Controller
      
     }
 
-
+ 
 
     public function login($value){
 
         $user = Usuario::where('Correo', $value)->orWhere('Telefono', $value)->first();
-        return $user->makeVisible(['Contrasena']); 
+
+        if($user === null){
+            
+            return response([], 404);
+
+        }
+        return $user->makeVisible(['Contrasena']);; 
     }
+
+
+
 
     public function loginMovil($value){
 
@@ -270,6 +306,8 @@ class Usuarios extends Controller
             'Segundo_Apellido'=>$request->Segundo_Apellido,
             'Fecha_Nacimiento'=>$request->Fecha_Nacimiento,
             'Peso'=>$request->Peso,
+            'Foto'=>$request->Foto,
+            'Avatar'=>$request->Avatar,
             'Apodo'=>$request->Apodo,
             'Pais'=>$request->Pais ? $request->Pais : '',
             'Cod_Pais'=>$request->Cod_Pais ? $request->Cod_Pais : '',
@@ -343,9 +381,7 @@ class Usuarios extends Controller
         
     ]);
    } else{
-    return response()->json([
-        'message'=>'Lo sentimos algo salio mal.'
-    ]);
+    return response()->json(500);
    }
 
 

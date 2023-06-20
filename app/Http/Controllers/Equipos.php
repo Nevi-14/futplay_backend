@@ -8,9 +8,12 @@ use App\Models\Equipo;
 use App\Models\Jugador;
 use App\Models\HistorialPartido;
 use App\Models\HistorialPartidoEquipo;
-
+use App\Models\DetalleReservacion;
 use Illuminate\Support\Facades\Storage;
 use File;
+use DateTime;
+use DateInterval;
+use Carbon\Carbon;
 
 
 
@@ -88,7 +91,37 @@ class Equipos extends Controller
     }
 
 
+    public function getPerfilEquipo(Request $request){
+        $equipos = Equipo::where('Cod_Equipo',  $request->Cod_Equipo)->with('provincias','cantones','distritos','usuarios')->get();
+         
+        $new = [];
 
+        if(count($equipos) == 0){
+         
+
+            return $new;
+        }
+        for( $i =0; $i < count($equipos) ; $i++) {
+            array_push($new,
+          [
+            'nombre' =>  $equipos[$i]->Nombre,
+            'equipo' =>  $equipos[$i]->withoutRelations(), 
+          'provincia' => $equipos[$i]->provincias->Provincia,
+          'canton' => $equipos[$i]->cantones->Canton,
+          'distrito' => $equipos[$i]->distritos->Distrito,
+          'correo' => $equipos[$i]->usuarios->Correo
+          
+          
+          ]
+           );
+           if($i == count($equipos) -1){
+            return $new;
+
+           }
+        
+        }
+
+    }
 
     public function getEquipos(Request $request){
         $equipos = Equipo::where('Cod_Usuario','!=' , $request->Cod_Usuario)->with('provincias','cantones','distritos','usuarios')->get();
@@ -318,34 +351,135 @@ class Equipos extends Controller
 
 
     }
+
+    public function validarPuntaje(Request $request){
+
+        $marcador = [];
+        $ids =  [];
+        $cod_equipo = $request->Cod_Equipo;
+
+        $date =  Carbon::now('America/Costa_Rica');
+        $newDate = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)
+        ->format('Y-m-d');
+
+
+
+
+        $reservacionesEquipos =  DetalleReservacion::with('reservaciones','retador','rival')
+     //   ->where( function ($query) use ($cod_equipo  ) {
+     //    //  $query->whereRelation('rival','Cod_Equipo', '=', $cod_equipo)
+           // ->orwhereRelation('retador','Cod_Equipo', '=', $cod_equipo);
+  //      })
+        ->WhereHas('reservaciones', function ($query)  use($newDate ){
+            $query->where('Fecha', '<=',  $newDate)
+            ->orderBy('Fecha', 'desc');
+        })
+        ->get();
+
+if(count($reservacionesEquipos) == 0){
+        return [];
+}
+
+        for( $re =0; $re < count($reservacionesEquipos) ; $re++) {     
+          
+                      
+            if(!in_array($reservacionesEquipos[$re]->Cod_Reservacion, $ids))
+            {
+                $historial = HistorialPartido::where('Cod_Reservacion', $reservacionesEquipos[$re]->Cod_Reservacion)->get();
+                if(count($historial)> 0){
+                    array_push($marcador,
+                    ['Fecha' => $reservacionesEquipos[$re]->reservaciones->withoutRelations()->Fecha ,
+                     'Reservacion' => $reservacionesEquipos[$re]->Cod_Reservacion ,
+                    'Retador' => $historial[0]->Cod_Equipo, 
+                    'Equipo'=>$reservacionesEquipos[$re]->rival->withoutRelations()->Nombre,
+                    'Rival' => $historial[1]->Cod_Equipo, 
+                    'Equipo Rival'=>$reservacionesEquipos[$re]->retador->withoutRelations()->Nombre,
+                    'Marcador Retador' => [$historial[0]->Goles_Retador,
+                    $historial[0]->Goles_Rival], 
+                    'Marcador Rival' => [$historial[0]->Goles_Retador,
+                    $historial[0]->Goles_Rival]               
+                ]
+                
+                
+                
+                
+                );
+
+                }else{
+
+                    array_push($marcador,'No records '. $reservacionesEquipos[$re]->Cod_Reservacion);
+                }
+            //    array_push($ids,$reservacionesEquipos[$re]->Cod_Reservacion);
+               
+ 
+ 
+  }
+  
+ 
+
+  if($re == count($reservacionesEquipos) -1){
+                  
+    $dureza = HistorialPartidoEquipo::select('Dureza')
+    ->groupBy('Dureza')
+    ->orderByRaw('COUNT(*) DESC')
+    ->limit(1)
+    ->where('Cod_Equipo', $request->Cod_Equipo)
+    ->get();
+
+        return ['Historial Reservaciones' => $marcador];
+       }
+
+
+          
+   
+
+}
+  
+
+
+    }
     public function postDurezaEquipo(Request $request)
     {
 
-        HistorialPartidoEquipo::create([
-            'Cod_Equipo'=>$request->Cod_Equipo,
-            'Dureza'=>$request->Dureza
-        ]);
+     
       
 
         $moda = HistorialPartidoEquipo::select('Dureza')
         ->groupBy('Dureza')
         ->orderByRaw('COUNT(*) DESC')
         ->limit(1)
-        ->where('Cod_Equipo', $request->Cod_Equipo)
+        ->where('Cod_Equipo', 4)
         ->get();
+        if(empty($moda[0])){
+        
+            $equipo = Equipo::where('Cod_Equipo', $request->Cod_Equipo)->update([
+                'Dureza'=> $request->Dureza
+                ]);
 
 
-       
-        $findEquipo = HistorialPartido::where('Cod_Equipo', $request->Cod_Equipo)->get()->first();
-        $equipo = Equipo::where('Cod_Equipo', $request->Cod_Equipo)->update([
-            'Dureza'=> $moda[0]['Dureza']
-            ]);
+                return response()->json([
+                    'message'=>'El equipo se actualizo con éxito.',
+                    'equipo'=>Equipo::where('Cod_Equipo', $request->Cod_Equipo)->get()->first()
+                ]);
+
+        }else{
+          
+            $equipo = Equipo::where('Cod_Equipo', $request->Cod_Equipo)->update([
+                'Dureza'=> $moda[0]['Dureza']
+                ]);
+
+                
+                return response()->json([
+                    'message'=>'El equipo se actualizo con éxito.',
+                    'equipo'=>Equipo::where('Cod_Equipo', $request->Cod_Equipo)->get()->first()
+                ]);
+    
+        }
+      
+
+
 
         
-            return response()->json([
-                'message'=>'El equipo se actualizo con éxito.',
-                'equipo'=>Equipo::where('Cod_Equipo', $request->Cod_Equipo)->get()->first()
-            ]);
     }
 
     public function putEstadisticaEquipo(Request $request)
