@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRolesTable extends Migration
+class ImagenesCanchas extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('Roles', function (Blueprint $table) {
-            $table->bigIncrements('Cod_Role');
-            $table->string('Nombre');
+        Schema::create('imagenes_canchas', function (Blueprint $table) {
+            $table->bigIncrements('ID');
+            $table->foreignId('Cod_Cancha')->references('Cod_Cancha')->on('canchas')->onDelete('cascade');
+            $table->string('Foto')->nullable();
             $table->timestamps();
         });
     }
@@ -27,7 +28,6 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usuarios');
-        Schema::dropIfExists('Roles');
+        Schema::dropIfExists('imagenes_canchas');
     }
 }

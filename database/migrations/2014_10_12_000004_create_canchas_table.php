@@ -20,7 +20,6 @@ class CreateCanchasTable extends Migration
             $table->foreignId('Cod_Provincia')->references('Cod_Provincia')->on('Provincias')->onDelete('cascade');
             $table->foreignId('Cod_Canton')->references('Cod_Canton')->on('Cantones')->onDelete('cascade');
             $table->foreignId('Cod_Distrito')->references('Cod_Distrito')->on('Distritos')->onDelete('cascade');
-            $table->string('Foto')->nullable();
             $table->string('Nombre')->unique();
             $table->string('Numero_Cancha')->nullable();
             $table->string('Telefono')->nullable();;

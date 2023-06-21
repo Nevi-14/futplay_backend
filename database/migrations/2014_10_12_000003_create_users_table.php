@@ -43,6 +43,7 @@ class CreateUsersTable extends Migration
             $table->boolean('Extranjero')->nullable();;
             $table->string('Pais')->nullable();
             $table->string('Cod_Pais')->nullable();
+            $table->date("Inicio_Sesion")->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -55,6 +56,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('usuarios');
     }
 }
