@@ -11,7 +11,6 @@ class Posiciones extends Controller
     public function getPosiciones(){
 
         $posiciones = Posicion::all();
-        
         return response()->json($posiciones);
     }
 

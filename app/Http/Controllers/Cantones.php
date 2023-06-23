@@ -20,6 +20,7 @@ class Cantones extends Controller
        
       $cantones = Canton::where('Cod_Provincia', $Cod_Provincia)->get();
       
+      if(Count($cantones)== 0)  return response([], 404) ;
 
       return response()->json($cantones);
   }

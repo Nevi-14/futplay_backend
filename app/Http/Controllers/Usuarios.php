@@ -182,13 +182,9 @@ class Usuarios extends Controller
  
 
     public function login($value){
-
         $user = Usuario::where('Correo', $value)->orWhere('Telefono', $value)->first();
-
-        if($user === null){
-            
+        if($user === null){      
             return response([], 404);
-
         }
         return $user->makeVisible(['Contrasena']);; 
     }
@@ -223,9 +219,12 @@ class Usuarios extends Controller
 
 
     }
+    
     public function deleteUser(Request $request)
     {
         $user = Usuario::where('Cod_Usuario',$request->Cod_Usuario)->delete();
+
+        if($user == null) return  response([], 404);
         return response()->json([
             'message'=>'El usuario se borro con exito.',
             'user'=>$user

@@ -11,7 +11,6 @@ class Provincias extends Controller
     public function getProvincias(){
 
         $provincias = Provincia::all();
-        
         return response()->json($provincias);
     }
 

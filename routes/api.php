@@ -28,6 +28,9 @@ use App\Http\Controllers\HistorialPartidoEquipo;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+// FINALIZADAS
+
 Route::get('get/provincias', [Provincias::class, 'getProvincias']);
 Route::get('get/cantones', [Cantones::class, 'getCantones']);
 Route::get('get/distritos', [Distritos::class, 'getDistritos']);
@@ -38,8 +41,17 @@ Route::get('get/estados', [Estados::class, 'getEstados']);
 Route::get('get/login-in/{value}', [Usuarios::class, 'login']);
 Route::get('get/login-in-movil/{value}', [Usuarios::class, 'loginMovil']);
 Route::post('post/usuario', [Usuarios::class, 'postUser']);
-Route::get('get/usuario/{Cod_Usuario}', [Usuarios::class, 'getUser']);
+Route::put('put/usuario/{id}', [Usuarios::class, 'putUser']);
+Route::delete('delete/usuario/{Cod_Usuario}', [Usuarios::class, 'deleteUser']);
+ 
 
+//  PENDIENTES
+ 
+
+
+
+ 
+Route::get('get/usuario/{Cod_Usuario}', [Usuarios::class, 'getUser']);
 Route::get('get/usuarios/foto/{Cod_Usuario}', [Usuarios::class, 'getImage']);
 
 
@@ -66,7 +78,7 @@ Route::put('put/avatar/usuario/{Cod_Usuario}', [Usuarios::class, 'putUserAvatar'
 Route::get('get/lista/usuarios/{Cod_Usuario}', [Usuarios::class, 'getUsers']);
 Route::get('get/categorias', [Categorias::class, 'getCategorias']);
 Route::post('post/usuario', [Usuarios::class, 'postUser']);
-Route::put('put/usuario/{id}', [Usuarios::class, 'putUser']);
+ 
 Route::put('put/usuario/jugador/futplay/{Cod_Usuario}', [Usuarios::class, 'putJugadorFutPlay']);
 Route::put('put/usuario/jugador/del/partido/{Cod_Usuario}', [Usuarios::class, 'putJugadorDelPartido']);
 Route::put('put/usuario/{id}', [Usuarios::class, 'putUser']);
@@ -86,7 +98,7 @@ Route::get('get/reservaciones/movil/{Cod_Usuario}', [Reservaciones::class, 'getR
 Route::delete('delete/reservacion/{Cod_Reservacion}', [Reservaciones::class, 'deleteReservacion']);
 Route::get('get/disponibilidad/reservaciones/cancha/{Cod_Cancha}/{Hora_Inicio}/{Hora_Fin}', [Reservaciones::class, 'getVerificarDisponibilidadReservacion']);
 Route::post('post/detalle/reservacion/{Cod_Reservacion}', [DetalleReservaciones::class, 'postDetalle']);
-Route::delete('delete/usuario/{Cod_Usuario}', [Usuarios::class, 'deleteUser']);
+ 
 Route::put('put/detalle/reservacion/{Cod_Reservacion}', [DetalleReservaciones::class, 'putDetalleReservacion']);
 Route::put('put/reservacion/{Cod_Reservacion}', [Reservaciones::class, 'putReservacion']);
 

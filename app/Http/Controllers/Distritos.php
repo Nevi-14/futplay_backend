@@ -20,6 +20,7 @@ class Distritos extends Controller
        
       $distritos = Distrito::where('Cod_Canton', $Cod_Canton)->get();
       
+      if(Count( $distritos)== 0) return response([], 404);
 
       return response()->json($distritos);
   }
