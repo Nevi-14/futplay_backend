@@ -499,6 +499,9 @@ $newTime = $dT->format('Y-m-d H:i');
          
      }
     public function getReservacionesEnviadas(Request $request){
+        $date =  Carbon::now('America/Costa_Rica');
+        $newDate = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)
+        ->format('Y-m-d');
         $reservaciones =  [];
         $misEquipos = [];
         $ids =  [];
@@ -513,7 +516,8 @@ $newTime = $dT->format('Y-m-d H:i');
         $reservacionesEquipos =  DetalleReservacion::with('reservaciones','retador','rival')
         ->where( function ($query) use ($cod_usuario, $usuario  ) {
             $query->whereRelation('retador','Cod_Usuario', '=',$usuario)
-            ->whereRelation('reservaciones','Cod_Estado', '=', 2);
+            ->whereRelation('reservaciones','Cod_Estado', '=', 2)
+            ->whereRelation('reservaciones','Fecha', '>=', $date);
         })
         ->get();
         for( $re =0; $re < count($reservacionesEquipos) ; $re++) {     
@@ -562,6 +566,9 @@ $newTime = $dT->format('Y-m-d H:i');
     public function getReservacionesRecibidas(Request $request){
 
 
+        $date =  Carbon::now('America/Costa_Rica');
+        $newDate = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)
+        ->format('Y-m-d');
         $reservaciones =  [];
         $misEquipos = [];
         $ids =  [];
@@ -574,9 +581,10 @@ $newTime = $dT->format('Y-m-d H:i');
         for( $e =0; $e < count($equipos) ; $e++) {
         $usuario = $equipos[$e]['equipos']['Cod_Usuario']; 
         $reservacionesEquipos =  DetalleReservacion::with('reservaciones','retador','rival')
-        ->where( function ($query) use ($usuario  ) {
+        ->where( function ($query) use ($usuario,$date  ) {
             $query->whereRelation('rival','Cod_Usuario', '=',$usuario)
-            ->whereRelation('reservaciones','Cod_Estado', '=', 2);
+            ->whereRelation('reservaciones','Cod_Estado', '=', 2)
+            ->whereRelation('reservaciones','Fecha', '>=', $date);
         })
         ->where('Cod_Estado', 3)
         ->get();

@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
            CategoriasSeeder::class,
            EstadosSeeder::class,
            PosicionesSeeder::class,
-           RolesSeeder::class
+           RolesSeeder::class,
+           TiposReservacionesSeeder::class
         ]);
     }
 }

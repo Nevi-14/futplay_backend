@@ -1,0 +1,14 @@
+[
+    {
+        "Codigo": "RI",
+        "Nombre": "Reservacion Individual"
+    },
+    {
+        "Codigo": "RA",
+        "Nombre": "Reto Abierto"
+    },
+    {
+        "Codigo": "RG",
+        "Nombre": "Reservacion Grupal"
+    }
+]

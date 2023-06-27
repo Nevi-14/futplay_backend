@@ -18,6 +18,7 @@ use App\Http\Controllers\DetalleReservaciones;
 use App\Http\Controllers\Solicitudes;
 use App\Http\Controllers\HistorialPartidos;
 use App\Http\Controllers\HistorialPartidoEquipo;
+use App\Http\Controllers\TiposReservaciones;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -43,13 +44,9 @@ Route::get('get/login-in-movil/{value}', [Usuarios::class, 'loginMovil']);
 Route::post('post/usuario', [Usuarios::class, 'postUser']);
 Route::put('put/usuario/{id}', [Usuarios::class, 'putUser']);
 Route::delete('delete/usuario/{Cod_Usuario}', [Usuarios::class, 'deleteUser']);
- 
+Route::get('get/tipos/reservaciones', [TiposReservaciones::class, 'getTiposReservaciones']);
 
 //  PENDIENTES
- 
-
-
-
  
 Route::get('get/usuario/{Cod_Usuario}', [Usuarios::class, 'getUser']);
 Route::get('get/usuarios/foto/{Cod_Usuario}', [Usuarios::class, 'getImage']);
@@ -107,14 +104,7 @@ Route::get('get/clasificacion/equipos', [Equipos::class, 'getEquiposClasificacio
 Route::get('get/mis/equipos/{Cod_Usuario}', [Equipos::class, 'getUsuarioEquipos']);
 Route::post('post/equipo', [Equipos::class, 'postEquipo']);
 
-
-
 Route::post('post/validar/puntaje', [HistorialPartidos::class, 'repararPuntaje']);
-
-
-
-
-
 
 Route::get('get/filtro/canchas/{Cod_Provincia}/{Cod_Canton}/{Cod_Distrito}/{Cod_Categoria}', [Canchas::class, 'getFiltroListaCanchas']);
 
@@ -122,12 +112,9 @@ Route::get('get/filtro/usuarios/{Cod_Provincia}/{Cod_Canton}/{Cod_Distrito}/{Cod
 
 Route::get('get/filtro/equipos/{Cod_Provincia}/{Cod_Canton}/{Cod_Distrito}', [Equipos::class, 'getFiltroEquipos']);
 
-
 Route::post('post/dureza/equipo/{Cod_Equipo}', [Equipos::class, 'postDurezaEquipo']);
 
 Route::put('put/avatar/equipo/{Cod_Equipo}', [Equipos::class, 'putEquipoAvatar']);
-
-
 
 Route::get('get/perfil/equipo/{Cod_Equipo}', [Equipos::class, 'getPerfilEquipo']);
 Route::post('post/foto/equipo/{Cod_Equipo}', [Equipos::class, 'postFotoEquipo']);
@@ -139,8 +126,6 @@ Route::get('get/jugadores/equipo/{Cod_Equipo}', [Jugadores::class, 'getJugadores
 Route::post('post/jugadores/equipo/{Cod_Equipo}', [Jugadores::class, 'postJugador']);
 Route::put('put/jugadores/equipo/{Cod_Equipo}', [Jugadores::class, 'putJugador']);
 Route::delete('delete/jugadores/equipo/{Cod_Jugador}', [Jugadores::class, 'deleteJugador']);
-
-
 
 Route::get('get/solicitudes/recibidas/equipo/{Cod_Equipo}', [Solicitudes::class, 'getSolicitudesRecibidasEquipos']);
 Route::get('get/solicitudes/recibidas/usuario/{Cod_Usuario}', [Solicitudes::class, 'getSolicitudesRecibidasUsuarios']);

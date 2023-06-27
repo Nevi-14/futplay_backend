@@ -17,6 +17,7 @@ class CreateReservacionesTable extends Migration
             $table->bigIncrements('Cod_Reservacion');
             $table->foreignId('Cod_Usuario')->references('Cod_Usuario')->on('Usuarios')->onDelete('cascade');
             $table->foreignId('Cod_Cancha')->references('Cod_Cancha')->on('Canchas')->onDelete('cascade');
+            $table->foreignId('Cod_Tipo')->references('Cod_Tipo')->on('tipos_reservaciones')->onDelete('cascade');
             $table->foreignId('Cod_Estado')->references('Cod_Estado')->on('Estados')->onDelete('cascade');
             $table->boolean('Reservacion_Externa')->nullable();
             $table->string('Titulo')->nullable();

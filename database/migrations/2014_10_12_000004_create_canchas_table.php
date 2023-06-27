@@ -42,6 +42,7 @@ class CreateCanchasTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('reservaciones');
         Schema::dropIfExists('canchas');
     }
 }
