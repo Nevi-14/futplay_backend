@@ -40,7 +40,7 @@ class Usuario extends Authenticatable
     }
      
     public function geolocalizacion(){
-        return $this->belongsTo('App\Models\UsuarioGeolocalizacion', 'ID');
+        return $this->belongsTo('App\Models\UsuarioGeolocalizacion', 'Cod_Usuario');
     }
   
 

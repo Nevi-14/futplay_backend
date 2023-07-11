@@ -16,9 +16,6 @@ class CreateEquiposTable extends Migration
         Schema::create('equipos', function (Blueprint $table) {
             $table->bigIncrements('Cod_Equipo');
             $table->foreignId('Cod_Usuario')->references('Cod_Usuario')->on('Usuarios')->onDelete('cascade');
-            $table->foreignId('Cod_Provincia')->references('Cod_Provincia')->on('Provincias')->onDelete('cascade');
-            $table->foreignId('Cod_Canton')->references('Cod_Canton')->on('Cantones')->onDelete('cascade');
-            $table->foreignId('Cod_Distrito')->references('Cod_Distrito')->on('Distritos')->onDelete('cascade');
             $table->boolean('Avatar')->nullable();
             $table->string('Foto')->nullable();
             $table->string('Nombre')->unique();

@@ -19,6 +19,7 @@ use App\Http\Controllers\Solicitudes;
 use App\Http\Controllers\HistorialPartidos;
 use App\Http\Controllers\HistorialPartidoEquipo;
 use App\Http\Controllers\TiposReservaciones;
+use App\Http\Controllers\UsuariosGeolocalizacion;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -158,6 +159,13 @@ Route::put('put/partido/{Cod_Partido}', [HistorialPartidos::class, 'putPartido']
 Route::put('put/finalizar/partido/{Cod_Reservacion}', [HistorialPartidos::class, 'finalizarPartido']);
 
 
+
+// USUARIO GELOCALIZACION
+
+Route::get('get/usuario/geolocalizacion/{Cod_Usuario}', [UsuariosGeolocalizacion::class, 'getUsuarioGeolocalizacion']);
+Route::post('post/usuario/geolocalizacion', [UsuariosGeolocalizacion::class, 'postUsuarioGeolocalizacion']);
+Route::put('put/usuario/geolocalizacion/{Cod_Usuario}', [UsuariosGeolocalizacion::class, 'putUsuarioGeolocalizacion']);
+Route::delete('delete/usuario/geolocalizacion/{Cod_Usuario}', [UsuariosGeolocalizacion::class, 'deleteUsuarioGeocalizacion']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

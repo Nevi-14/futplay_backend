@@ -237,9 +237,6 @@ class Usuarios extends Controller
         $validator = $request->validate([
             'Cod_Role'=>'required',
             'Cod_Posicion'=>'required',
-            'Cod_Provincia'=>'required',
-            'Cod_Canton'=>'required',
-            'Cod_Distrito'=>'required',
             'Nombre'=>'required',
             'Primer_Apellido'=>'required',
             'Fecha_Nacimiento'=>'required',
@@ -251,31 +248,19 @@ class Usuarios extends Controller
             Usuario::create([
                 'Cod_Role'=>$request->Cod_Role,
                 'Cod_Posicion'=>$request->Cod_Posicion,
-                'Cod_Provincia'=>$request->Cod_Provincia,
-                'Cod_Canton'=>$request->Cod_Canton,
-                'Cod_Distrito'=>$request->Cod_Distrito,
                 'Nombre'=>$request->Nombre,
                 'Primer_Apellido'=>$request->Primer_Apellido,
                 'Fecha_Nacimiento'=>$request->Fecha_Nacimiento,
                 'Telefono'=>$request->Telefono,
                 'Correo'=>$request->Correo,
-                'Contrasena'=>$request->Contrasena,
-                'Pais'=>$request->Pais ? $request->Pais : '',
-                'Cod_Pais'=>$request->Cod_Pais ? $request->Cod_Pais : '',
+                'Contrasena'=>$request->Contrasena
             ]);
           
-        $user = Usuario::with('provincias','cantones','distritos', 'posiciones')->where('Correo', $request->Correo)->first();
+        $user = Usuario::where('Correo', $request->Correo)->first();
          
         if($user){
             return response()->json([
-                'action'=>true,
-                'message'=>'Bienvenido',
-                'nombre' =>  $user->Nombre .' '. $user->Primer_Apellido,
-                'usuario'=>$user->makeVisible(['Contrasena'])->withoutRelations(),
-                'provincia'=>$user->provincias->Provincia,
-                'canton'=>$user->cantones->Canton,
-                'distrito'=>$user->distritos->Distrito,
-                'posicion'=>$user->posiciones->Posicion,
+               $user
             ]);
 
         }

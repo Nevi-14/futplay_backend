@@ -412,10 +412,17 @@ $newTime = $dT->format('Y-m-d H:i');
          
      }
 
+
      public function getReservacionesAbiertas(Request $request){
+        $date =  Carbon::now('America/Costa_Rica');
+        $newDate = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)
+        ->format('Y-m-d');
         
         $reservaciones =  DetalleReservacion::with('reservaciones','rival','retador')
-        ->whereRelation('reservaciones', 'Cod_Estado',10)->get();
+        ->whereRelation('reservaciones', 'Cod_Estado',10)
+        ->WhereHas('reservaciones', function ($query) use ($newDate) {
+            $query->where('Fecha', '>=', $newDate);
+        })->get();
        
          $new = [];
  

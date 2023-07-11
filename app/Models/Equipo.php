@@ -19,25 +19,10 @@ class Equipo extends Model
     
 
     }
-    public function provincias(){
-
-        return $this->belongsTo(Provincia::class , 'Cod_Provincia');
-    
-
+    public function geolocalizacion(){
+        return $this->belongsTo('App\Models\EquipoGeolocalizacion', 'Cod_Usuario');
     }
-
-    public function cantones(){
-
-        return $this->belongsTo(Canton::class , 'Cod_Canton');
-    
-
-    }
-    public function distritos(){
-
-        return $this->belongsTo(Distrito::class , 'Cod_Distrito');
-    
-
-    }
+  
     public function rivales(){
 
         return $this->hasMany('App\Models\DetalleReservacion' , 'Cod_Equipo');

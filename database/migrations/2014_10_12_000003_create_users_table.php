@@ -17,16 +17,13 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('Cod_Usuario');
             $table->foreignId('Cod_Role')->references('Cod_Role')->on('Roles')->onDelete('cascade');
             $table->foreignId('Cod_Posicion')->references('Cod_Posicion')->on('Posiciones')->onDelete('cascade');
-            $table->foreignId('Cod_Provincia')->references('Cod_Provincia')->on('Provincias')->onDelete('cascade');
-            $table->foreignId('Cod_Canton')->references('Cod_Canton')->on('Cantones')->onDelete('cascade');
-            $table->foreignId('Cod_Distrito')->references('Cod_Distrito')->on('Distritos')->onDelete('cascade');
-            $table->boolean('Modo_Customizado')->nullable();
             $table->boolean('Avatar')->nullable();
             $table->string('Foto')->nullable();
             $table->string('Nombre');
             $table->string('Primer_Apellido');
             $table->string('Segundo_Apellido')->nullable();;
             $table->date('Fecha_Nacimiento');
+            $table->string('Codigo_Llamadas')->nullable();
             $table->string('Telefono')->unique();
             $table->string('Correo')->unique();
             $table->string('Contrasena');
@@ -40,9 +37,6 @@ class CreateUsersTable extends Migration
             $table->boolean('Estado')->default(true);
             $table->string('Descripcion_Estado')->nullable();
             $table->boolean('Compartir_Datos')->default(true);
-            $table->boolean('Extranjero')->nullable();;
-            $table->string('Pais')->nullable();
-            $table->string('Cod_Pais')->nullable();
             $table->date("Inicio_Sesion")->nullable();
             $table->rememberToken();
             $table->timestamps();
