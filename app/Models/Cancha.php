@@ -17,7 +17,7 @@ class Cancha extends Model
     return $this->belongsTo(Usuario::class , 'Cod_Usuario');
     }
     public function geolocalizacion(){
-        return $this->belongsTo('App\Models\CanchaGeolocalizacion', 'Cod_Usuario');
+        return $this->belongsTo('App\Models\CanchaGeolocalizacion', 'ID');
     }
   
     public function reservaciones(){

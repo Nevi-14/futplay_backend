@@ -15,7 +15,7 @@ class Usuarios extends Controller
 
     public function getUsers(Request $request){
  
-        $usuarios = Usuario::with('provincias','cantones','distritos', 'posiciones')->where('Cod_Usuario','!=' , $request->Cod_Usuario)->get();
+        $usuarios = Usuario::with('posiciones')->where('Cod_Usuario','!=' , $request->Cod_Usuario)->get();
         $new = [];
         if(count($usuarios) == 0){
             return response([], 404);
@@ -25,9 +25,6 @@ class Usuarios extends Controller
           [
           'nombre' =>  $usuarios[$i]->Nombre .' '. $usuarios[$i]->Primer_Apellido, 
           'usuario' =>  $usuarios[$i]->withoutRelations(), 
-          'provincia' => $usuarios[$i]->provincias->Provincia,
-          'canton' => $usuarios[$i]->cantones->Canton,
-          'distrito' => $usuarios[$i]->distritos->Distrito,
           'posicion' => $usuarios[$i]->posiciones->Posicion
           ]
            );
@@ -57,20 +54,17 @@ class Usuarios extends Controller
     }
 
     public function getUser(Request $request){
-        $user = Usuario::with('provincias','cantones','distritos', 'posiciones')->where('Cod_Usuario', $request->Cod_Usuario)->first();       
+        $user = Usuario::with('posiciones')->where('Cod_Usuario', $request->Cod_Usuario)->first();       
         if($user != null ){
             return response()->json([
                 'message'=>'Bienvenido',
                 'nombre' =>  $user->Nombre .' '. $user->Primer_Apellido,
                 'usuario'=>$user->makeVisible(['Contrasena'])->withoutRelations(),
-                'provincia'=>$user->provincias->Provincia,
-                'canton'=>$user->cantones->Canton,
-                'distrito'=>$user->distritos->Distrito,
                 'posicion'=>$user->posiciones->Posicion,
             ]);
          
         }
-        return response([], 404);
+        return response()->json([], 404); 
     
 
        
@@ -81,93 +75,24 @@ class Usuarios extends Controller
 
         $usuarios =   [];
        
-
-     
-      
         if($request->Cod_Posicion != 'null' ){
-
-
-
-            if ($request->Cod_Provincia != 'null'  && $request->Cod_Canton  != 'null'  && $request->Cod_Distrito  != 'null' && $request->Cod_Posicion != 'null' ){
-            
-                $usuarios =  Usuario::with('provincias','cantones','distritos', 'posiciones')
-                ->whereRelation('provincias','Cod_Provincia', $request->Cod_Provincia)
-                ->whereRelation('cantones','Cod_Canton', $request->Cod_Canton)
-                ->whereRelation('distritos','Cod_Distrito',$request->Cod_Distrito)
-                ->Where('Cod_Posicion', $request->Cod_Posicion)
-                ->Where('Estado', 1)->get();
-                
-            }else if ($request->Cod_Provincia != 'null'  && $request->Cod_Canton != 'null'  && $request->Cod_Posicion != 'null'){
-            
-                $usuarios =  Usuario::with('provincias','cantones','distritos', 'posiciones')
-                ->whereRelation('provincias','Cod_Provincia', $request->Cod_Provincia)
-                ->whereRelation('cantones','Cod_Canton', $request->Cod_Canton)
-                ->Where('Cod_Posicion', $request->Cod_Posicion)
-                ->Where('Estado', 1)->get();
-            
-            }
-
-            else  if($request->Cod_Provincia  != 'null' && $request->Cod_Posicion != 'null'){
-
-
-            
-                $usuarios =  Usuario::with('provincias','cantones','distritos', 'posiciones')
-                ->whereRelation('provincias','Cod_Provincia', $request->Cod_Provincia)
-                ->Where('Cod_Posicion', $request->Cod_Posicion)
-                ->Where('Estado', 1)->get();
-            } 
-            
-
-        }else{
-
-
-            if ($request->Cod_Provincia  != 'null' && $request->Cod_Canton  != 'null'  && $request->Cod_Distrito  != 'null'){
-            
-                $usuarios =  Usuario::with('provincias','cantones','distritos', 'posiciones')
-                ->whereRelation('provincias','Cod_Provincia', $request->Cod_Provincia)
-                ->whereRelation('cantones','Cod_Canton', $request->Cod_Canton)
-                ->whereRelation('distritos','Cod_Distrito',$request->Cod_Distrito)
-                ->Where('Estado', 1)->get();
-                
-            }else if ($request->Cod_Provincia  != 'null' && $request->Cod_Canton  != 'null'){
-            
-                $usuarios =  Usuario::with('provincias','cantones','distritos', 'posiciones')
-                ->whereRelation('provincias','Cod_Provincia', $request->Cod_Provincia)
-                ->whereRelation('cantones','Cod_Canton', $request->Cod_Canton)
-                ->Where('Estado', 1)->get();
-            
-            }else  if($request->Cod_Provincia  != 'null'){
-
-                $usuarios =  Usuario::with('provincias','cantones','distritos', 'posiciones')
-                ->whereRelation('provincias','Cod_Provincia', $request->Cod_Provincia)
-                ->Where('Estado', 1)->get();
-            } 
-            
-
-
+          $usuarios =  Usuario::with('posiciones')
+            ->Where('Cod_Posicion', $request->Cod_Posicion)
+            ->Where('Estado', 1)->get();
         }
-
 
        
         $new = [];
 
         if(count($usuarios) == 0){
-         
-
-            return $new;
+         return response([], 404);
         }
         for( $i =0; $i < count($usuarios) ; $i++) {
             array_push($new,
           [
             'nombre' =>  $usuarios[$i]->Nombre .' '. $usuarios[$i]->Primer_Apellido,
             'usuario' =>  $usuarios[$i]->withoutRelations(), 
-          'provincia' => $usuarios[$i]->provincias->Provincia,
-          'canton' => $usuarios[$i]->cantones->Canton,
-          'distrito' => $usuarios[$i]->distritos->Distrito,
-          'posicion' => $usuarios[$i]->posiciones->Posicion
-        
-          
-          
+            'posicion' => $usuarios[$i]->posiciones->Posicion  
           ]
            );
            if($i == count($usuarios) -1){
@@ -194,7 +119,7 @@ class Usuarios extends Controller
 
     public function loginMovil($value){
 
-        $user = Usuario::with('provincias','cantones','distritos', 'posiciones')->where('Correo', $value)->orWhere('Telefono', $value)->first();
+        $user = Usuario::with('posiciones')->where('Correo', $value)->orWhere('Telefono', $value)->first();
          
         if($user){
             return response()->json([
@@ -202,22 +127,10 @@ class Usuarios extends Controller
                 'message'=>'Bienvenido',
                 'nombre' =>  $user->Nombre .' '. $user->Primer_Apellido,
                 'usuario'=>$user->makeVisible(['Contrasena'])->withoutRelations(),
-                'provincia'=>$user->provincias->Provincia,
-                'canton'=>$user->cantones->Canton,
-                'distrito'=>$user->distritos->Distrito,
                 'posicion'=>$user->posiciones->Posicion,
-            ]);
-
-        }else{
-            return response()->json([
-                'action'=>false,
-                'message'=>'Lo sentimos algo salio mal',
-                'usuario'=>null
-            ]);
-        }
-      
-
-
+            ], 200);
+        } 
+        return response()->json([], 404); 
     }
     
     public function deleteUser(Request $request)
@@ -226,9 +139,7 @@ class Usuarios extends Controller
 
         if($user == null) return  response([], 404);
         return response()->json([
-            'message'=>'El usuario se borro con exito.',
-            'user'=>$user
-        ]);
+        ], 200);
     }
 
     public function postUser(Request $request)
@@ -261,19 +172,10 @@ class Usuarios extends Controller
         if($user){
             return response()->json([
                $user
-            ]);
-
+            ], 200);
         }
-
-
-            return $user;
-        }else{
-            return response()->json([
-                'message'=>'Lo sentimos algo salio mal.',
-                'user'=>$request
-            ]);
-
-        }
+        } 
+        return response()->json([], 404); 
     }
 
     public function putUser(Request $request)
@@ -281,9 +183,6 @@ class Usuarios extends Controller
      
         $user = Usuario::where('Cod_Usuario', $request->Cod_Usuario)->update([
             'Cod_Posicion'=>$request->Cod_Posicion,
-            'Cod_Provincia'=>$request->Cod_Provincia,
-            'Cod_Canton'=>$request->Cod_Canton,
-            'Cod_Distrito'=>$request->Cod_Distrito,
             'Nombre'=>$request->Nombre,
             'Estatura'=>$request->Estatura,
             'Primer_Apellido'=>$request->Primer_Apellido,
@@ -292,25 +191,17 @@ class Usuarios extends Controller
             'Peso'=>$request->Peso,
             'Foto'=>$request->Foto,
             'Avatar'=>$request->Avatar,
-            'Apodo'=>$request->Apodo,
-            'Pais'=>$request->Pais ? $request->Pais : '',
-            'Cod_Pais'=>$request->Cod_Pais ? $request->Cod_Pais : '',
+            'Apodo'=>$request->Apodo
             ]);
 
         
             if($user){
                 return response()->json([
-                    'message'=>'El usuario se actualizo con éxito.',
-                    'user'=>Usuario::where('Cod_Usuario', $request->Cod_Usuario)->get()
-                ]);
+                    Usuario::where('Cod_Usuario', $request->Cod_Usuario)->get()
+                ], 200);
             
-            }else{
-                return response()->json([
-                    'message'=>'Lo sentimos algo salio mal.',
-                    'user'=>$user
-                ]);
-            
-            }
+            } 
+            return response()->json([], 404); 
     }
 
     public function putJugadorFutPlay(Request $request)
@@ -322,9 +213,8 @@ class Usuarios extends Controller
 
         
             return response()->json([
-                'message'=>'El usuarioddd se actualizo con éxito.',
-                'user'=>Usuario::where('Cod_Usuario', $request->Cod_Usuario)->get()->first()
-            ]);
+              Usuario::where('Cod_Usuario', $request->Cod_Usuario)->get()->first()
+            ], 200);
     }
 
     public function putJugadorDelPartido(Request $request)
@@ -336,9 +226,8 @@ class Usuarios extends Controller
 
         
             return response()->json([
-                'message'=>'El usuario se actualizo con éxito.',
-                'user'=>Usuario::where('Cod_Usuario', $request->Cod_Usuario)->get()->first()
-            ]);
+    Usuario::where('Cod_Usuario', $request->Cod_Usuario)->get()->first()
+            ], 200);
     }
 
 

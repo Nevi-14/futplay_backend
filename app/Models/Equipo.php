@@ -20,7 +20,7 @@ class Equipo extends Model
 
     }
     public function geolocalizacion(){
-        return $this->belongsTo('App\Models\EquipoGeolocalizacion', 'Cod_Usuario');
+        return $this->belongsTo('App\Models\EquipoGeolocalizacion', 'ID');
     }
   
     public function rivales(){

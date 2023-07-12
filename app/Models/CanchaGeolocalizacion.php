@@ -11,5 +11,7 @@ class CanchaGeolocalizacion extends Model
     protected $primaryKey = 'ID';
     protected $guarded = [];
 
-
+    public function canchas(){
+        return $this->belongsTo(Cancha::class , 'Cod_Cancha');
+        }
 }

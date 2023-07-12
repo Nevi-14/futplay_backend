@@ -11,5 +11,7 @@ class EquipoGeolocalizacion extends Model
     protected $primaryKey = 'ID';
     protected $guarded = [];
 
-
+    public function equipos(){
+        return $this->belongsTo(Equipo::class , 'Cod_Equipo');
+        }
 }
