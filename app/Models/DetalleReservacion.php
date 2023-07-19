@@ -21,4 +21,8 @@ class DetalleReservacion extends Model
     public function rival(){
         return $this->belongsTo('App\Models\Equipo', 'Cod_Rival');
     }
+
+    public function moneda(){
+        return $this->belongsTo('App\Models\Moneda' , 'ID');
+        }
 }

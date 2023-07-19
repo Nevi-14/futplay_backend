@@ -837,6 +837,7 @@ if($e == count($equipos) -1){
             'Cod_Usuario'=>'required',
             'Cod_Cancha'=>'required',
             'Cod_Estado'=>'required',
+            'Cod_Tipo'=>'required',
             'Reservacion_Externa'=>'required',
             'Titulo'=>'required',
             'Dia_Completo'=>'required'
@@ -846,6 +847,7 @@ if($e == count($equipos) -1){
                 'Cod_Usuario'=>$request->Cod_Usuario,
                 'Cod_Cancha'=>$request->Cod_Cancha,
                 'Cod_Estado'=>$request->Cod_Estado,
+                'Cod_Tipo'=>$request->Cod_Tipo,
                 'Reservacion_Externa'=>$request->Reservacion_Externa,
                 'Titulo'=>$request->Titulo,
                 'Fecha'=>$request->Fecha,

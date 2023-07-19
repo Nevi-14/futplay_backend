@@ -16,6 +16,7 @@ class CreateDetalleReservacionesTable extends Migration
         Schema::create('detalle_reservaciones', function (Blueprint $table) {
             $table->bigIncrements('Cod_Detalle');
             $table->foreignId('Cod_Reservacion')->references('Cod_Reservacion')->on('Reservaciones')->onDelete('cascade');
+            $table->foreignId('Cod_Moneda')->references('ID')->on('Monedas')->onDelete('cascade');
             $table->foreignId('Cod_Estado')->references('Cod_Estado')->on('Estados')->onDelete('cascade');
             $table->foreignId('Cod_Retador')->references('Cod_Equipo')->on('Equipos')->onDelete('cascade');
             $table->foreignId('Cod_Rival')->references('Cod_Equipo')->on('Equipos')->onDelete('cascade');

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDistritosTable extends Migration
+class CreateMonedas extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateDistritosTable extends Migration
      */
     public function up()
     {
-        Schema::create('Distritos', function (Blueprint $table) {
-            $table->bigIncrements('Cod_Distrito');
-            $table->foreignId('Cod_Canton')->references('Cod_Canton')->on('Cantones')->onDelete('cascade');
-            $table->string('Distrito');
+        Schema::create('monedas', function (Blueprint $table) {
+            $table->bigIncrements('ID');
+            $table->string('Moneda')->nullable();
+            $table->string('Descripcion')->nullable();
             $table->timestamps();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      *
@@ -28,6 +28,6 @@ class CreateDistritosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Distritos');
+        Schema::dropIfExists('monedas');
     }
 }

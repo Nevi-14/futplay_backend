@@ -124,7 +124,7 @@ class Equipos extends Controller
     }
 
     public function getEquipos(Request $request){
-        $equipos = Equipo::where('Cod_Usuario','!=' , $request->Cod_Usuario)->with('provincias','cantones','distritos','usuarios')->get();
+        $equipos = Equipo::where('Cod_Usuario','!=' , $request->Cod_Usuario)->with('usuarios')->get();
          
         $new = [];
 
@@ -137,10 +137,7 @@ class Equipos extends Controller
             array_push($new,
           [
             'nombre' =>  $equipos[$i]->Nombre,
-            'equipo' =>  $equipos[$i]->withoutRelations(), 
-          'provincia' => $equipos[$i]->provincias->Provincia,
-          'canton' => $equipos[$i]->cantones->Canton,
-          'distrito' => $equipos[$i]->distritos->Distrito,
+            'equipo' =>  $equipos[$i]->withoutRelations(),
           'correo' => $equipos[$i]->usuarios->Correo
           
           
@@ -206,9 +203,6 @@ class Equipos extends Controller
 
           'nombre' =>  $equipos[$i]->equipos->Nombre,
           'equipo' =>  $equipos[$i]->equipos->withoutRelations(), 
-          'provincia' => $equipos[$i]->equipos->provincias->Provincia,
-          'canton' => $equipos[$i]->equipos->cantones->Canton,
-          'distrito' => $equipos[$i]->equipos->distritos->Distrito,
           'correo' => $equipos[$i]->equipos->usuarios->Correo
           
           
@@ -234,10 +228,6 @@ class Equipos extends Controller
  
 
         $validator = $request->validate([
-            'Cod_Usuario'=>'required',  
-            'Cod_Provincia'=>'required',
-            'Cod_Canton'=>'required',
-            'Cod_Distrito'=>'required',
             'Foto'=>'required',
             'Avatar'=>'required',
             'Dureza'=>'required',
@@ -248,9 +238,6 @@ class Equipos extends Controller
         if($validator){
           $equipo = Equipo::create([
                 'Cod_Usuario'=>$request->Cod_Usuario,
-                'Cod_Provincia'=>$request->Cod_Provincia,
-                'Cod_Canton'=>$request->Cod_Canton,
-                'Cod_Distrito'=>$request->Cod_Distrito,
                 'Avatar'=>$request->Avatar,
                 'Foto'=>$request->Foto,
                 'Dureza'=>$request->Dureza,
@@ -277,9 +264,6 @@ class Equipos extends Controller
   
     
         $equipo = Equipo::where('Cod_Equipo', $request->Cod_Equipo)->update([
-            'Cod_Provincia'=>$request->Cod_Provincia,
-            'Cod_Canton'=>$request->Cod_Canton,
-            'Cod_Distrito'=>$request->Cod_Distrito,
             'Foto'=>$request->Foto,
             'Avatar'=>$request->Avatar,
             'Nombre'=>$request->Nombre,

@@ -16,14 +16,12 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         $this->call([
-           ProvinciasSeeder::class,
-           CantonesSeeder::class,
-           DistritosSeeder::class,
            CategoriasSeeder::class,
            EstadosSeeder::class,
            PosicionesSeeder::class,
            RolesSeeder::class,
-           TiposReservacionesSeeder::class
+           TiposReservacionesSeeder::class,
+           MonedasSeeder::class
         ]);
     }
 }

@@ -1,15 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\UsuarioGeolocalizacion;
+use App\Models\CanchaGeolocalizacion;
 use Illuminate\Http\Request;
 
-class UsuariosGeolocalizacion extends Controller
+class EquiposGeolocalizacion extends Controller
 {
   
-    public function getUsuarioGeolocalizacion(Request $request){
+    public function getCanchaGeolocalizacion(Request $request){
        
-        $geolocalizacion = UsuarioGeolocalizacion::where('Cod_Usuario', $request->Cod_Usuario)->first();
+        $geolocalizacion = CanchaGeolocalizacion::where('Cod_Cancha', $request->Cod_Cancha)->first();
  
         if($geolocalizacion){
             return response([$geolocalizacion], 200);
@@ -17,14 +17,14 @@ class UsuariosGeolocalizacion extends Controller
         return response()->json([], 404); 
     }
     
-    public function postUsuarioGeolocalizacion(Request $request)
+    public function postCanchaGeolocalizacion(Request $request)
     {
         $validator = $request->validate([
-            'Cod_Usuario'=>'required'
+            'Cod_Cancha'=>'required'
         ]);
         if($validator){
-          $geoLocalizacion =  UsuarioGeolocalizacion::create([
-                'Cod_Usuario'=>$request->Cod_Usuario,
+          $geoLocalizacion =  CanchaGeolocalizacion::create([
+                'Cod_Cancha'=>$request->Cod_Cancha,
                 'Codigo_Pais'=>$request->Codigo_Pais,
                 'Pais'=>$request->Pais,
                 'Codigo_Estado'=>$request->Codigo_Estado,
@@ -32,7 +32,9 @@ class UsuariosGeolocalizacion extends Controller
                 'Codigo_Ciudad'=>$request->Codigo_Ciudad,
                 'Ciudad'=>$request->Ciudad,
                 'Codigo_Postal'=>$request->Codigo_Postal,
-                'Direccion'=>$request->Direccion
+                'Direccion'=>$request->Direccion,
+                'Latitud'=>$request->Latitud,
+                'Longitud'=>$request->Longitud
             ]);
           
         if($geoLocalizacion){
@@ -44,11 +46,11 @@ class UsuariosGeolocalizacion extends Controller
         return response()->json([], 404);
     }
 
-    public function putUsuarioGeolocalizacion(Request $request)
+    public function putCanchaGeolocalizacion(Request $request)
     {
      
-        $geoLocalizacion = UsuarioGeolocalizacion::where('Cod_Usuario', $request->Cod_Usuario)->update([
-            'Cod_Usuario'=>$request->Cod_Usuario,
+        $geoLocalizacion = CanchaGeolocalizacion::where('Cod_Cancha', $request->Cod_Cancha)->update([
+            'Cod_Cancha'=>$request->Cod_Cancha,
             'Codigo_Pais'=>$request->Codigo_Pais,
             'Pais'=>$request->Pais,
             'Codigo_Estado'=>$request->Codigo_Estado,
@@ -56,11 +58,13 @@ class UsuariosGeolocalizacion extends Controller
             'Codigo_Ciudad'=>$request->Codigo_Ciudad,
             'Ciudad'=>$request->Ciudad,
             'Codigo_Postal'=>$request->Codigo_Postal,
-            'Direccion'=>$request->Direccion
+            'Direccion'=>$request->Direccion,
+            'Latitud'=>$request->Latitud,
+            'Longitud'=>$request->Longitud
             ]);
             if($geoLocalizacion){
                 return response()->json([
-                    UsuarioGeolocalizacion::where('Cod_Usuario', $request->Cod_Usuario)->first()
+                    CanchaGeolocalizacion::where('Cod_Cancha', $request->Cod_Cancha)->first()
                 ], 200);
             
             }
@@ -68,9 +72,9 @@ class UsuariosGeolocalizacion extends Controller
             return response()->json([], 404);
     }
    
-    public function deleteUsuarioGeocalizacion(Request $request)
+    public function deleteCanchaGeocalizacion(Request $request)
     {
-      $geoLocalizacion = UsuarioGeolocalizacion::where('Cod_Usuario', $request->Cod_Usuario)->delete();
+      $geoLocalizacion = CanchaGeolocalizacion::where('Cod_Cancha', $request->Cod_Cancha)->delete();
       if($geoLocalizacion == 1){
         return response()->json([
         ], 200);

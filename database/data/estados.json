@@ -30,5 +30,13 @@
     {
         "Cod_Estado": 8,
         "Estado": "Revisión"
+    },
+    {
+        "Cod_Estado": 9,
+        "Estado": "Eliminado"
+    },
+    {
+        "Cod_Estado": 10,
+        "Estado": "Reto Abierto"
     }
 ]

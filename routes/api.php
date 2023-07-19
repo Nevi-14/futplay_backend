@@ -20,6 +20,10 @@ use App\Http\Controllers\HistorialPartidos;
 use App\Http\Controllers\HistorialPartidoEquipo;
 use App\Http\Controllers\TiposReservaciones;
 use App\Http\Controllers\UsuariosGeolocalizacion;
+use App\Http\Controllers\EquiposGeolocalizacion;
+use App\Http\Controllers\CanchasGeolocalizacion;
+
+ 
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -166,6 +170,24 @@ Route::get('get/usuario/geolocalizacion/{Cod_Usuario}', [UsuariosGeolocalizacion
 Route::post('post/usuario/geolocalizacion', [UsuariosGeolocalizacion::class, 'postUsuarioGeolocalizacion']);
 Route::put('put/usuario/geolocalizacion/{Cod_Usuario}', [UsuariosGeolocalizacion::class, 'putUsuarioGeolocalizacion']);
 Route::delete('delete/usuario/geolocalizacion/{Cod_Usuario}', [UsuariosGeolocalizacion::class, 'deleteUsuarioGeocalizacion']);
+
+
+
+// EQUIPO GELOCALIZACION
+
+Route::get('get/equipo/geolocalizacion/{Cod_Equipo}', [EquiposGeolocalizacion::class, 'getEquipoGeolocalizacion']);
+Route::post('post/equipo/geolocalizacion', [EquiposGeolocalizacion::class, 'postEquipoGeolocalizacion']);
+Route::put('put/equipo/geolocalizacion/{Cod_Equipo}', [EquiposGeolocalizacion::class, 'putEquipoGeolocalizacion']);
+Route::delete('delete/equipo/geolocalizacion/{Cod_Equipo}', [EquiposGeolocalizacion::class, 'deleteEquipoGeocalizacion']);
+
+
+
+// CANCHA GELOCALIZACION
+
+Route::get('get/cancha/geolocalizacion/{Cod_Cancha}', [CanchasGeolocalizacion::class, 'getCanchaGeolocalizacion']);
+Route::post('post/cancha/geolocalizacion', [CanchasGeolocalizacion::class, 'postCanchaGeolocalizacion']);
+Route::put('put/cancha/geolocalizacion/{Cod_Cancha}', [CanchasGeolocalizacion::class, 'putCanchaGeolocalizacion']);
+Route::delete('delete/cancha/geolocalizacion/{Cod_Cancha}', [CanchasGeolocalizacion::class, 'deleteCanchaGeocalizacion']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

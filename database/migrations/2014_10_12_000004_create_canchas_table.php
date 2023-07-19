@@ -16,6 +16,8 @@ class CreateCanchasTable extends Migration
         Schema::create('canchas', function (Blueprint $table) {
             $table->bigIncrements('Cod_Cancha');
             $table->foreignId('Cod_Usuario')->references('Cod_Usuario')->on('Usuarios')->onDelete('cascade');
+                      $table->foreignId('Cod_Categoria')->references('Cod_Categoria')->on('Categorias')->onDelete('cascade');
+                      $table->string('Foto')->nullable();
             $table->string('Nombre')->unique();
             $table->string('Numero_Cancha')->nullable();
             $table->string('Telefono')->nullable();;

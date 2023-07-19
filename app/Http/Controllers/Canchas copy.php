@@ -17,7 +17,7 @@ class Canchas extends Controller
     public function getListaCanchas(){
 
    
-        $canchas = Cancha::with('categorias','usuarios','horarios')->Where('Estado', 1)->get();
+        $canchas = Cancha::with('provincias','cantones','distritos','categorias','usuarios','horarios')->Where('Estado', 1)->get();
        
         $new = [];
 
@@ -32,6 +32,9 @@ class Canchas extends Controller
             'nombre' =>  $canchas[$i]->Nombre, 
             'cancha' =>  $canchas[$i]->withoutRelations(), 
           'horario' => $canchas[$i]->horarios,
+          'provincia' => $canchas[$i]->provincias->Provincia,
+          'canton' => $canchas[$i]->cantones->Canton,
+          'distrito' => $canchas[$i]->distritos->Distrito,
           'categoria' => $canchas[$i]->categorias->Nombre,
           'correo' => $canchas[$i]->usuarios->Correo
           
@@ -196,7 +199,7 @@ class Canchas extends Controller
 
         
 
-        $canchas = Cancha::where('Cod_Usuario',  $Cod_Usuario)->with('categorias','usuarios')->get();
+        $canchas = Cancha::where('Cod_Usuario',  $Cod_Usuario)->with('provincias','cantones','distritos','categorias','usuarios')->get();
          
         $new = [];
 
@@ -210,6 +213,9 @@ class Canchas extends Controller
           [
             'nombre' =>  $canchas[$i]->Nombre, 
             'cancha' =>  $canchas[$i]->withoutRelations(), 
+          'provincia' => $canchas[$i]->provincias->Provincia,
+          'canton' => $canchas[$i]->cantones->Canton,
+          'distrito' => $canchas[$i]->distritos->Distrito,
           'categoria' => $canchas[$i]->categorias->Nombre,
           'correo' => $canchas[$i]->usuarios->Correo
           

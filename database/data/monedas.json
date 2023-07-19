@@ -1,0 +1,10 @@
+[
+    {
+        "Moneda": "₡",
+        "Descripcion": "Colones"
+    },
+    {
+        "Moneda": "$",
+        "Descripcion": "Dolares"
+    }
+]

@@ -122,13 +122,7 @@ class Usuarios extends Controller
         $user = Usuario::with('posiciones')->where('Correo', $value)->orWhere('Telefono', $value)->first();
          
         if($user){
-            return response()->json([
-                'action'=>true,
-                'message'=>'Bienvenido',
-                'nombre' =>  $user->Nombre .' '. $user->Primer_Apellido,
-                'usuario'=>$user->makeVisible(['Contrasena'])->withoutRelations(),
-                'posicion'=>$user->posiciones->Posicion,
-            ], 200);
+            return response()->json($user->makeVisible(['Contrasena'])->withoutRelations(), 200);
         } 
         return response()->json([], 404); 
     }
@@ -156,7 +150,7 @@ class Usuarios extends Controller
             'Contrasena'=>'required'
         ]);
         if($validator){
-            Usuario::create([
+          $user =  Usuario::create([
                 'Cod_Role'=>$request->Cod_Role,
                 'Cod_Posicion'=>$request->Cod_Posicion,
                 'Nombre'=>$request->Nombre,
@@ -167,12 +161,12 @@ class Usuarios extends Controller
                 'Contrasena'=>$request->Contrasena
             ]);
           
-        $user = Usuario::where('Correo', $request->Correo)->first();
+     
          
         if($user){
             return response()->json([
-               $user
-            ], 200);
+                Usuario::where('Correo', $request->Correo)->first()
+            ]);
         }
         } 
         return response()->json([], 404); 
@@ -241,10 +235,13 @@ class Usuarios extends Controller
     $footer = 'Gracias';
     $user = Usuario::where('Correo', $email)->orWhere('Telefono', $email)->get()->first();
    
+ 
    if($user){
 
     $name = $user->Nombre;
+   
     Mail::to($user->Correo)->send(new email($name,$body, $footer ));
+    
     PasswordReset::create([
         'email'=> $user->Correo,
         'token'=>$token,

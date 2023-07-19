@@ -43,7 +43,6 @@ class DetalleReservaciones extends Controller
 # CREA  DETALLE DE RESERVACION
           $detalle = DetalleReservacion::create([
                 'Cod_Reservacion'=>$request->Cod_Reservacion,
-                'Reservacion_Grupal'=>$request->Reservacion_Grupal  ? $request->Reservacion_Grupal  : false,
                 'Cod_Estado'=>$request->Cod_Estado,
                 'Cod_Retador'=>$request->Cod_Retador,
                 'Cod_Rival'=>$request->Cod_Rival,
@@ -61,7 +60,7 @@ class DetalleReservaciones extends Controller
                 'Monto_Sub_Total'=>$request->Monto_Sub_Total,
                 'Monto_Total'=>$request->Monto_Total,
                 'Pendiente'=>$request->Pendiente,
-                'Notas_Estado'=> !$request->Reservacion_Grupal  ? 'Reservacion confirmada'  : $request->Notas_Estado,
+                'Notas_Estado'=>  $request->Notas_Estado,
             ]);
           
             return $detalle;
