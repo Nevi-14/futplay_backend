@@ -12,37 +12,31 @@ use File;
 class Canchas extends Controller
 {
   
-   
 
     public function getListaCanchas(){
-
-   
-        $canchas = Cancha::with('categorias','usuarios','horarios')->Where('Estado', 1)->get();
-       
+        $canchas = Cancha::with('categorias','usuarios','horarios','geolocalizacion')->Where('Estado', 1)->get();
         $new = [];
-
         if(count($canchas) == 0){
-         
-
             return $new;
         }
         for( $i =0; $i < count($canchas) ; $i++) {
             array_push($new,
           [
-            'nombre' =>  $canchas[$i]->Nombre, 
-            'cancha' =>  $canchas[$i]->withoutRelations(), 
-          'horario' => $canchas[$i]->horarios,
-          'categoria' => $canchas[$i]->categorias->Nombre,
-          'correo' => $canchas[$i]->usuarios->Correo
-          
-          
+        'nombre' =>  $canchas[$i]->Nombre, 
+        'cancha' =>  $canchas[$i]->withoutRelations(), 
+        'horario' => $canchas[$i]->horarios,
+        'categoria' => $canchas[$i]->categorias->Nombre,
+        'correo' => $canchas[$i]->usuarios->Correo,
+        'pais' => $canchas[$i]->geolocalizacion->first()->Pais,
+        'estado' => $canchas[$i]->geolocalizacion->first()->Estado,
+        'ciudad' => $canchas[$i]->geolocalizacion->first()->Ciudad,
+        'latitud' => $canchas[$i]->geolocalizacion->first()->Latitud,
+        'longitud' => $canchas[$i]->geolocalizacion->first()->Longitud
           ]
            );
            if($i == count($canchas) -1){
             return $new;
-
-           }
-        
+           }  
         }
      
     }

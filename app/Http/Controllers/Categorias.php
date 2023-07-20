@@ -8,11 +8,8 @@ class Categorias extends Controller
 {
  
     public function getCategorias(){
-
-   
       $categorias = Categoria::all();
-
-      return $categorias;
+      return response()->json($categorias);
     }
 
  

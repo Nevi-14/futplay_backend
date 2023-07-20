@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\CanchaGeolocalizacion;
 use Illuminate\Http\Request;
 
-class EquiposGeolocalizacion extends Controller
+class CanchasGeolocalizacion extends Controller
 {
   
     public function getCanchaGeolocalizacion(Request $request){
@@ -19,9 +19,11 @@ class EquiposGeolocalizacion extends Controller
     
     public function postCanchaGeolocalizacion(Request $request)
     {
+       
         $validator = $request->validate([
             'Cod_Cancha'=>'required'
         ]);
+       
         if($validator){
           $geoLocalizacion =  CanchaGeolocalizacion::create([
                 'Cod_Cancha'=>$request->Cod_Cancha,

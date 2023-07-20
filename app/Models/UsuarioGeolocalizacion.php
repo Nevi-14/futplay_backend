@@ -12,7 +12,7 @@ class UsuarioGeolocalizacion extends Model
     protected $guarded = [];
 
     public function usuarios(){
-        return $this->belongsTo(Usuario::class , 'Cod_Usuario');
+        return $this->belogsTo('App\Models\Usuario', 'Cod_Usuario');
         }
 
 }

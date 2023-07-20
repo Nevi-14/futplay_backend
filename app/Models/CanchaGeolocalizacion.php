@@ -12,6 +12,6 @@ class CanchaGeolocalizacion extends Model
     protected $guarded = [];
 
     public function canchas(){
-        return $this->belongsTo(Cancha::class , 'Cod_Cancha');
+        return $this->belongsTo('App\Models\Cancha', 'Cod_Cancha');
         }
 }

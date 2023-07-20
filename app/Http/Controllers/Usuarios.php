@@ -64,19 +64,18 @@ class Usuarios extends Controller
             ]);
          
         }
-        return response()->json([], 404); 
-    
-
-       
+        return response()->json([], 404);    
     }
 
+
+ 
 
     public function getFiltroUsuarios(Request $request){
 
         $usuarios =   [];
        
         if($request->Cod_Posicion != 'null' ){
-          $usuarios =  Usuario::with('posiciones')
+          $usuarios =  Usuario::with('posiciones','geolocalizacion')
             ->Where('Cod_Posicion', $request->Cod_Posicion)
             ->Where('Estado', 1)->get();
         }
@@ -92,6 +91,7 @@ class Usuarios extends Controller
           [
             'nombre' =>  $usuarios[$i]->Nombre .' '. $usuarios[$i]->Primer_Apellido,
             'usuario' =>  $usuarios[$i]->withoutRelations(), 
+            'geolocalizacion' => $usuarios[$i]->geolocalizacion,  
             'posicion' => $usuarios[$i]->posiciones->Posicion  
           ]
            );
@@ -130,11 +130,13 @@ class Usuarios extends Controller
     public function deleteUser(Request $request)
     {
         $user = Usuario::where('Cod_Usuario',$request->Cod_Usuario)->delete();
-
         if($user == null) return  response([], 404);
         return response()->json([
         ], 200);
     }
+
+
+ 
 
     public function postUser(Request $request)
     {
@@ -171,7 +173,7 @@ class Usuarios extends Controller
         } 
         return response()->json([], 404); 
     }
-
+ 
     public function putUser(Request $request)
     {
      
@@ -197,6 +199,11 @@ class Usuarios extends Controller
             } 
             return response()->json([], 404); 
     }
+
+
+
+    
+
 
     public function putJugadorFutPlay(Request $request)
     {

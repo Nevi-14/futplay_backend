@@ -67,7 +67,6 @@ class UsuariosGeolocalizacion extends Controller
 
             return response()->json([], 404);
     }
-   
     public function deleteUsuarioGeocalizacion(Request $request)
     {
       $geoLocalizacion = UsuarioGeolocalizacion::where('Cod_Usuario', $request->Cod_Usuario)->delete();

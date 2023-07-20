@@ -15,7 +15,7 @@ class CanchasGeoLocalizacion extends Migration
     {
         Schema::create('canchas_geolocalizacion', function (Blueprint $table) {
             $table->bigIncrements('ID');
-            $table->foreignId('Cod_cancha')->references('Cod_cancha')->on('Canchas')->onDelete('cascade');
+            $table->foreignId('Cod_Cancha')->references('Cod_Cancha')->on('Canchas')->onDelete('cascade');
             $table->string('Codigo_Pais')->nullable();
             $table->string('Pais')->nullable();
             $table->string('Codigo_Estado')->nullable();

@@ -62,6 +62,11 @@ class Reservaciones extends Controller
      
      
      } 
+
+
+ 
+      
+
     public function getReservaciones(Request $request){
         $date = today()->format('Y-m-d');
         $reservaciones =  DetalleReservacion::with('reservaciones','retador','rival')
