@@ -38,7 +38,10 @@ class Jugadores extends Controller
             [
                 'jugador'=>$jugadores[$i]->withoutRelations(),
                 'usuario'=>$jugadores[$i]->usuarios->withoutRelations(),
-                'equipo'=>$jugadores[$i]->equipos->withoutRelations()
+                'equipo'=>$jugadores[$i]->equipos->withoutRelations(),
+                'pais'=>$jugadores[$i]->usuarios->geolocalizacion()->first()->Pais,
+                'estado'=>$jugadores[$i]->usuarios->geolocalizacion()->first()->Estado,
+                'ciudad'=>$jugadores[$i]->usuarios->geolocalizacion()->first()->Cuidad
             ]
            );
            if($i == count($jugadores) -1){

@@ -14,5 +14,9 @@
     {
         "Cod_Categoria": 4,
         "Nombre": "Fútbol 5"
+    },
+    {
+        "Cod_Categoria": 5,
+        "Nombre": "Fútbol 6"
     }
 ]

@@ -22,16 +22,16 @@ class Canchas extends Controller
         for( $i =0; $i < count($canchas) ; $i++) {
             array_push($new,
           [
-        'nombre' =>  $canchas[$i]->Nombre, 
-        'cancha' =>  $canchas[$i]->withoutRelations(), 
-        'horario' => $canchas[$i]->horarios,
-        'categoria' => $canchas[$i]->categorias->Nombre,
-        'correo' => $canchas[$i]->usuarios->Correo,
-        'pais' => $canchas[$i]->geolocalizacion->first()->Pais,
-        'estado' => $canchas[$i]->geolocalizacion->first()->Estado,
-        'ciudad' => $canchas[$i]->geolocalizacion->first()->Ciudad,
-        'latitud' => $canchas[$i]->geolocalizacion->first()->Latitud,
-        'longitud' => $canchas[$i]->geolocalizacion->first()->Longitud
+            'nombre' =>  $canchas[$i]->Nombre, 
+            'cancha' =>  $canchas[$i]->withoutRelations(), 
+            'horario' => $canchas[$i]->horarios,
+            'categoria' => $canchas[$i]->categorias->Nombre,
+            'correo' => $canchas[$i]->usuarios->Correo,
+            'pais' => $canchas[$i]->geolocalizacion->first()->Pais,
+            'estado' => $canchas[$i]->geolocalizacion->first()->Estado,
+            'ciudad' => $canchas[$i]->geolocalizacion->first()->Ciudad,
+            'latitud' => $canchas[$i]->geolocalizacion->first()->Latitud,
+            'longitud' => $canchas[$i]->geolocalizacion->first()->Longitud
           ]
            );
            if($i == count($canchas) -1){
@@ -40,6 +40,8 @@ class Canchas extends Controller
         }
      
     }
+
+    
 
     public function getFiltroListaCanchas(Request $request){
 
@@ -154,7 +156,7 @@ class Canchas extends Controller
 
         
 
-        $canchas = Cancha::where('Cod_Cancha',  $Cod_Cancha)->with('provincias','cantones','distritos','categorias','usuarios')->get();
+        $canchas = Cancha::where('Cod_Cancha',  $Cod_Cancha)->with('geolocalizacion','categorias','usuarios')->get();
          
         $new = [];
 
@@ -169,13 +171,13 @@ class Canchas extends Controller
             'nombre' =>  $canchas[$i]->Nombre, 
             'cancha' =>  $canchas[$i]->withoutRelations(), 
             'horario' => $canchas[$i]->horarios,
-          'provincia' => $canchas[$i]->provincias->Provincia,
-          'canton' => $canchas[$i]->cantones->Canton,
-          'distrito' => $canchas[$i]->distritos->Distrito,
-          'categoria' => $canchas[$i]->categorias->Nombre,
-          'correo' => $canchas[$i]->usuarios->Correo
-          
-          
+            'categoria' => $canchas[$i]->categorias->Nombre,
+            'correo' => $canchas[$i]->usuarios->Correo,
+            'pais' => $canchas[$i]->geolocalizacion->first()->Pais,
+            'estado' => $canchas[$i]->geolocalizacion->first()->Estado,
+            'ciudad' => $canchas[$i]->geolocalizacion->first()->Ciudad,
+            'latitud' => $canchas[$i]->geolocalizacion->first()->Latitud,
+            'longitud' => $canchas[$i]->geolocalizacion->first()->Longitud
           ]
            );
            if($i == count($canchas) -1){
@@ -190,7 +192,7 @@ class Canchas extends Controller
 
         
 
-        $canchas = Cancha::where('Cod_Usuario',  $Cod_Usuario)->with('categorias','usuarios')->get();
+        $canchas = Cancha::where('Cod_Usuario',  $Cod_Usuario)->with('geolocalizacion','categorias','usuarios')->get();
          
         $new = [];
 
@@ -205,7 +207,12 @@ class Canchas extends Controller
             'nombre' =>  $canchas[$i]->Nombre, 
             'cancha' =>  $canchas[$i]->withoutRelations(), 
           'categoria' => $canchas[$i]->categorias->Nombre,
-          'correo' => $canchas[$i]->usuarios->Correo
+          'correo' => $canchas[$i]->usuarios->Correo,
+          'pais' => $canchas[$i]->geolocalizacion->first()->Pais,
+          'estado' => $canchas[$i]->geolocalizacion->first()->Estado,
+          'ciudad' => $canchas[$i]->geolocalizacion->first()->Ciudad,
+          'latitud' => $canchas[$i]->geolocalizacion->first()->Latitud,
+          'longitud' => $canchas[$i]->geolocalizacion->first()->Longitud
           
           
           ]
@@ -350,9 +357,9 @@ class Canchas extends Controller
         $message = "";
         $cancha = Cancha::findOrFail($request->Cod_Cancha);
 
-        $this->validate($request, [
-            'image' => 'required|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
-          ]);
+      //  $this->validate($request, [
+        //    'image' => 'required|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
+          //]);
 
           $image = $request->file('image');
 

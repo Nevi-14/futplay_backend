@@ -15,7 +15,7 @@ class Usuarios extends Controller
 
     public function getUsers(Request $request){
  
-        $usuarios = Usuario::with('posiciones')->where('Cod_Usuario','!=' , $request->Cod_Usuario)->get();
+        $usuarios = Usuario::with('posiciones','geolocalizacion')->where('Cod_Usuario','!=' , $request->Cod_Usuario)->get();
         $new = [];
         if(count($usuarios) == 0){
             return response([], 404);
@@ -25,10 +25,14 @@ class Usuarios extends Controller
           [
           'nombre' =>  $usuarios[$i]->Nombre .' '. $usuarios[$i]->Primer_Apellido, 
           'usuario' =>  $usuarios[$i]->withoutRelations(), 
-          'posicion' => $usuarios[$i]->posiciones->Posicion
+          'posicion' => $usuarios[$i]->posiciones->Posicion,
+          'pais' => $usuarios[$i]->geolocalizacion->first()->Pais,
+          'estado' => $usuarios[$i]->geolocalizacion->first()->Estado,
+          'ciudad' => $usuarios[$i]->geolocalizacion->first()->Ciudad
           ]
            );
            if($i == count($usuarios) -1){
+            
             return $new;
            }
         
@@ -54,7 +58,7 @@ class Usuarios extends Controller
     }
 
     public function getUser(Request $request){
-        $user = Usuario::with('posiciones')->where('Cod_Usuario', $request->Cod_Usuario)->first();       
+        $user = Usuario::with('posiciones','geolocalizacion')->where('Cod_Usuario',$request->Cod_Usuario)->first();       
         if($user != null ){
             return response()->json([
                 'message'=>'Bienvenido',
@@ -147,6 +151,7 @@ class Usuarios extends Controller
             'Nombre'=>'required',
             'Primer_Apellido'=>'required',
             'Fecha_Nacimiento'=>'required',
+            'Codigo_Llamdas'=>'required',
             'Telefono'=>'required',
             'Correo'=>'required',
             'Contrasena'=>'required'
@@ -158,6 +163,7 @@ class Usuarios extends Controller
                 'Nombre'=>$request->Nombre,
                 'Primer_Apellido'=>$request->Primer_Apellido,
                 'Fecha_Nacimiento'=>$request->Fecha_Nacimiento,
+                'Cod_Posicion'=>$request->Cod_Posicion,
                 'Telefono'=>$request->Telefono,
                 'Correo'=>$request->Correo,
                 'Contrasena'=>$request->Contrasena

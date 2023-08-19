@@ -16,12 +16,15 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         $this->call([
-           CategoriasSeeder::class,
-           EstadosSeeder::class,
-           PosicionesSeeder::class,
-           RolesSeeder::class,
-           TiposReservacionesSeeder::class,
-           MonedasSeeder::class
+         //  CategoriasSeeder::class,
+           //EstadosSeeder::class,
+           //PosicionesSeeder::class,
+           //RolesSeeder::class,
+           //TiposReservacionesSeeder::class,
+           //MonedasSeeder::class
+           //UsuariosgeoSeeder::class
+          // EquiposgeoSeeder::class
+         CanchasgeoSeeder::class
         ]);
     }
 }

@@ -12,6 +12,6 @@ class EquipoGeolocalizacion extends Model
     protected $guarded = [];
 
     public function equipos(){
-        return $this->belongsTo(Equipo::class , 'Cod_Equipo');
+        return $this->belongsTo('App\Models\Equipo', 'Cod_Equipo');
         }
 }

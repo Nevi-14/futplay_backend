@@ -19,8 +19,6 @@ use Carbon\Carbon;
 
 class Equipos extends Controller
 {
-  
-
 
     public function getFiltroEquipos(Request $request){
 
@@ -92,7 +90,7 @@ class Equipos extends Controller
 
 
     public function getPerfilEquipo(Request $request){
-        $equipos = Equipo::where('Cod_Equipo',  $request->Cod_Equipo)->with('provincias','cantones','distritos','usuarios')->get();
+        $equipos = Equipo::where('Cod_Equipo',  $request->Cod_Equipo)->with('geolocalizacion','usuarios')->get();
          
         $new = [];
 
@@ -106,12 +104,10 @@ class Equipos extends Controller
           [
             'nombre' =>  $equipos[$i]->Nombre,
             'equipo' =>  $equipos[$i]->withoutRelations(), 
-          'provincia' => $equipos[$i]->provincias->Provincia,
-          'canton' => $equipos[$i]->cantones->Canton,
-          'distrito' => $equipos[$i]->distritos->Distrito,
-          'correo' => $equipos[$i]->usuarios->Correo
-          
-          
+            'correo' => $equipos[$i]->usuarios->Correo,
+            'pais' => $equipos[$i]->geolocalizacion->first()->Pais,
+            'estado' => $equipos[$i]->geolocalizacion->first()->Estado,
+            'ciudad' => $equipos[$i]->geolocalizacion->first()->Ciudad
           ]
            );
            if($i == count($equipos) -1){
@@ -122,9 +118,9 @@ class Equipos extends Controller
         }
 
     }
-
+ 
     public function getEquipos(Request $request){
-        $equipos = Equipo::where('Cod_Usuario','!=' , $request->Cod_Usuario)->with('usuarios')->get();
+        $equipos = Equipo::where('Cod_Usuario','!=' , $request->Cod_Usuario)->with('usuarios','geolocalizacion')->get();
          
         $new = [];
 
@@ -138,9 +134,10 @@ class Equipos extends Controller
           [
             'nombre' =>  $equipos[$i]->Nombre,
             'equipo' =>  $equipos[$i]->withoutRelations(),
-          'correo' => $equipos[$i]->usuarios->Correo
-          
-          
+            'correo' => $equipos[$i]->usuarios->Correo,
+            'pais' => $equipos[$i]->geolocalizacion->first()->Pais,
+            'estado' => $equipos[$i]->geolocalizacion->first()->Estado,
+            'ciudad' => $equipos[$i]->geolocalizacion->first()->Ciudad
           ]
            );
            if($i == count($equipos) -1){
@@ -203,8 +200,10 @@ class Equipos extends Controller
 
           'nombre' =>  $equipos[$i]->equipos->Nombre,
           'equipo' =>  $equipos[$i]->equipos->withoutRelations(), 
-          'correo' => $equipos[$i]->equipos->usuarios->Correo
-          
+          'correo' => $equipos[$i]->equipos->usuarios->Correo,
+          'pais' => $equipos[$i]->equipos->geolocalizacion->first()->Pais,
+          'estado' => $equipos[$i]->equipos->geolocalizacion->first()->Estado,
+          'ciudad' => $equipos[$i]->equipos->geolocalizacion->first()->Ciudad
           
           ]
            );

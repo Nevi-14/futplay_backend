@@ -77,7 +77,7 @@ Route::put('put/avatar/usuario/{Cod_Usuario}', [Usuarios::class, 'putUserAvatar'
 //Route::post('post/foto/usuario/{Cod_Usuario}', [Usuarios::class, 'postDurezaEquipo']);
 
 
-Route::get('get/lista/usuarios/{Cod_Usuario}', [Usuarios::class, 'getUsers']);
+Route::get('get/lista/usuarios/{Cod_Usuario}', [Usuarios::class, 'getUsers']); ///////
 Route::get('get/categorias', [Categorias::class, 'getCategorias']);
 Route::post('post/usuario', [Usuarios::class, 'postUser']);
  

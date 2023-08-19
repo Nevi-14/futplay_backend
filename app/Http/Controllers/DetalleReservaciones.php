@@ -17,10 +17,13 @@ class DetalleReservaciones extends Controller
     {
 # VALIDA QUE TODOS LOS CAMPOS ESTEN COMPLETOS
 
+
+ 
         $validator = $request->validate([
             'Cod_Reservacion'=>'required',  
             'Cod_Estado'=>'required',
             'Cod_Retador'=>'required',
+            'Cod_Moneda'=>'required',
             'Cod_Rival'=>'required',
             'Monto_Luz'=>'required',
             'Total_Horas'=>'required',
@@ -45,6 +48,7 @@ class DetalleReservaciones extends Controller
                 'Cod_Reservacion'=>$request->Cod_Reservacion,
                 'Cod_Estado'=>$request->Cod_Estado,
                 'Cod_Retador'=>$request->Cod_Retador,
+                'Cod_Moneda'=>$request->Cod_Moneda,
                 'Cod_Rival'=>$request->Cod_Rival,
                 'Luz'=>$request->Luz,
                 'Monto_Luz'=>$request->Monto_Luz,
